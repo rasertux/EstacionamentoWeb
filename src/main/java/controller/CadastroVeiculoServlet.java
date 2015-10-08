@@ -56,6 +56,10 @@ public class CadastroVeiculoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		VeiculoBean veiculo = new VeiculoBean();
 		TarifaBean tarifa = new TarifaBean();
+		VeiculoDao dao = new VeiculoDao();
+
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Cadastro Com Sucesso&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro No Cadastro&cor=red";
 
 		veiculo.setPlaca(request.getParameter("edplaca"));
 		veiculo.setMarca(request.getParameter("edmarca"));
@@ -63,9 +67,14 @@ public class CadastroVeiculoServlet extends HttpServlet {
 
 		tarifa.setIdtarifa(new Integer(request.getParameter("campo")));
 		veiculo.setIdtarifa(tarifa);
-		
-		VeiculoDao dao = new VeiculoDao();
-		dao.inserir(veiculo);
+
+		boolean op = dao.inserir(veiculo);
+		if (op) {
+			response.sendRedirect(SUCESSO);
+		} else {
+			response.sendRedirect(ERRO);
+
+		}
 
 		doGet(request, response);
 	}
@@ -98,7 +107,7 @@ public class CadastroVeiculoServlet extends HttpServlet {
 			sb.append("<input type='submit' value='Cadastrar'/>");
 			sb.append("<input type='reset' value='Limpar'/>");
 			sb.append("</form>");
-			sb.append("</HR>");
+			sb.append("<HR>");
 			sb.append("</BODY>");
 			sb.append("<HTML>");
 		}

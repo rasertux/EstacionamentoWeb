@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.TarifaDao;
+import model.VeiculoDao;
 
 /**
  * Servlet implementation class RemoverServlet
@@ -30,9 +31,18 @@ public class RemoverServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String valor = request.getParameter("id");
-		Integer id = new Integer(valor);
-		TarifaDao dao = new TarifaDao();
-		dao.remover(id);
+		if (valor != null) {
+			Integer id = new Integer(valor);
+			TarifaDao dao = new TarifaDao();
+			dao.remover(id);
+		} else {
+			String placa = request.getParameter("placa");
+			if (placa != null) {
+				VeiculoDao dao = new VeiculoDao();
+				dao.remover(placa);
+			}
+		}
+
 		response.sendRedirect("/EstacionamentoWeb/index.html");
 	}
 

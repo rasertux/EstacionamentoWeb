@@ -44,8 +44,8 @@ public class VeiculoDao implements GenericDao {
 		conexao = Conexao.conectar();
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_DELETE);
-			VeiculoBean veiculo = (VeiculoBean) objeto;
-			stmt.setString(1, veiculo.getPlaca());
+			String placa = (String) objeto;
+			stmt.setString(1, placa);
 			stmt.execute();
 			stmt.close();
 			return true;
@@ -124,6 +124,31 @@ public class VeiculoDao implements GenericDao {
 			return todos;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
+			return null;
+		} finally {
+			Conexao.fecharConexao(conexao);
+		}
+	}
+
+	public List<Object> getItensPor(String condicao) {
+		conexao = Conexao.conectar();
+		List<Object> todos = new ArrayList<Object>();
+		try {
+			PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_ALL + condicao);
+			VeiculoBean veiculo = null;
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				TarifaDao dao = new TarifaDao();
+				veiculo = new VeiculoBean();
+				veiculo.setPlaca(rs.getString("placa"));
+				veiculo.setMarca(rs.getString("marca"));
+				veiculo.setModelo(rs.getString("modelo"));
+				veiculo.setIdtarifa((TarifaBean) dao.consultar(rs.getInt("idtarifa")));
+				todos.add(veiculo);
+			}
+			return todos;
+		} catch (Exception ex) {
+			System.err.println(ex.getMessage());
 			return null;
 		} finally {
 			Conexao.fecharConexao(conexao);
