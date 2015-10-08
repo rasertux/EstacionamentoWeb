@@ -17,49 +17,53 @@ import model.TarifaDao;
 @WebServlet("/cadastrotarifa")
 public class CadastroTarifaServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CadastroTarifaServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public CadastroTarifaServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Cadastro Com Sucesso&cor=green";
 		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro No Cadastro&cor=red";
 		String descricao, valor;
 		descricao = request.getParameter("eddescricao");
 		valor = request.getParameter("edvalor");
-		if(descricao == null || descricao.isEmpty() || valor == null || valor.isEmpty()){
+		if (descricao == null || descricao.isEmpty() || valor == null || valor.isEmpty()) {
 			response.sendRedirect("cadastrodetarifa.html");
-		}else{
+		} else {
 			TarifaBean tarifa = new TarifaBean();
 			tarifa.setIdtarifa(0);
 			tarifa.setDescricao(descricao);
 			tarifa.setValor(new Float(valor));
-			
+
 			TarifaDao dao = new TarifaDao();
 			boolean op = dao.inserir(tarifa);
-			if(op){
+			if (op) {
 				response.sendRedirect(SUCESSO);
-			}else{
+			} else {
 				response.sendRedirect(ERRO);
-				
+
 			}
-	}
+		}
 	}
 
 }

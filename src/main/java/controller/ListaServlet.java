@@ -72,8 +72,8 @@ public class ListaServlet extends HttpServlet {
 		String urlremover = "/EstacionamentoWeb/remover?id=" + tarifa.getIdtarifa();
 		String urlalterar = "/EstacionamentoWeb/alterar?id=" + tarifa.getIdtarifa();
 
-		String imgremover = "<img src='Remover.PNG'>";
-		String imgalterar = "<img src='Editar.PNG'>";
+		String imgremover = "<img src='remover.png' width='8%'>";
+		String imgalterar = "<img src='alterar.png' width='8%'>";
 
 		String remover = "<a href='" + urlremover + "'>" + imgremover + "</a>";
 		String alterar = "<a href='" + urlalterar + "'>" + imgalterar + "</a>";
@@ -100,7 +100,7 @@ public class ListaServlet extends HttpServlet {
 			sb.append("<input type='submit' value='Pesquisar'/>");
 			sb.append("<input type='reset' value='Limpar'/>");
 			sb.append("</form>");
-			sb.append("<TABLE WIDTH='70%'>");
+			sb.append("<TABLE WIDTH='50%'>");
 			sb.append("<TR bgcolor='#DCDCDC'>");
 			sb.append("<TH>").append("Codigo").append("</TH>");
 			sb.append("<TH>").append("Descricao").append("</TH>");
@@ -113,7 +113,7 @@ public class ListaServlet extends HttpServlet {
 		sb.append("<TD>").append(tarifa.getIdtarifa()).append("</TD>");
 		sb.append("<TD>").append(tarifa.getDescricao()).append("</TD>");
 		sb.append("<TD>").append(valorFormatado).append("</TD>");
-		sb.append("<TD>").append(remover).append(alterar).append("<TD>");
+		sb.append("<TD width=\"30%\" align=\"center\">").append(remover).append(" | ").append(alterar).append("</TD>");
 		sb.append("</TR>");
 
 		if (rodape) {
