@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.TarifaBean;
+import model.TarifaDao;
 import model.VeiculoBean;
 import model.VeiculoDao;
 
@@ -93,27 +95,65 @@ public class ListaVeiculoServlet extends HttpServlet {
 
 		String cor = (vcor % 2 == 0) ? "#6495ED" : "#483D8B";
 		StringBuilder sb = new StringBuilder();
+		
+		List<Object> listaTarifas = null;
+		TarifaDao daoTarifas = new TarifaDao();
+		listaTarifas = daoTarifas.getItens();
 
 		if (cabecalho) {
-			sb.append("<HTML>");
-			sb.append("<HEAD>");
+			sb.append("<html>");
+			sb.append("<head>");
 			sb.append("<meta charset=\"UTF-8\">");
-			sb.append("<TITLE>LISTA DE VEICULOS</TITLE>");
-			sb.append("</HEAD>");
-			sb.append("<BODY>");
+			sb.append("<title>LISTA DE VEICULOS</title>");
+			// javascript básico
+			sb.append("<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>")
+			.append("<script type='text/javascript'>")
+			.append("$(document).ready(function(){")
+			.append("	$('#tipo-pesquisa').change(function(){")
+			.append("			if($(this).val() == 'idtarifa') {")
+			.append("           	$('#pesquisa-padrao').hide();")
+			.append("           	$('#valor-select').show();")
+			.append("           	$('#pesquisa-padrao').removeAttr('name');")
+			.append("           	$('#valor-select').attr('name', 'edvalor');")
+			.append("           } else {")
+			.append("           	$('#pesquisa-padrao').show();")
+			.append("           	$('#valor-select').hide();")
+			.append("           	$('#pesquisa-padrao').attr('name', 'edvalor');")
+			.append("           	$('#valor-select').removeAttr('name');")
+			.append("           }")
+			.append("		});")
+			.append("	});")
+			.append("</script>");
+			// fim do js básico
+			sb.append("</head>");
+			sb.append("<body>");
 			sb.append("<H1>LISTAGEM DE VEICULOS</H1>");
 			sb.append("<HR>");
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a>");
 			sb.append("<form method='post' action='/EstacionamentoWeb/listarveiculo'>");
 			sb.append("Pesquisar por:");
-			sb.append("<select name='campo'>");
+			sb.append("<select name='campo' id='tipo-pesquisa'>");
 			sb.append("<option value='todos'>Todos</option>");
 			sb.append("<option value='placa'>Placa</option>");
 			sb.append("<option value='marca'>Marca</option>");
 			sb.append("<option value='modelo'>Modelo</option>");
 			sb.append("<option value='idtarifa'>Tarifa</option>");
 			sb.append("</select>");
-			sb.append("Valor da pesquisa:<input type='text' name='edvalor'/>");
+			sb.append("Valor da pesquisa:<input type='text' id='pesquisa-padrao' name='edvalor'/>");
+			sb.append("<select style='display:none;' id='valor-select'>");
+			// foreach criando options para cada tarifa
+			for(Object objeto : listaTarifas) {
+				TarifaBean tb = (TarifaBean) objeto;
+				sb.append("<option value='")
+				.append(tb.getIdtarifa())
+				.append("'>")
+				.append(tb.getDescricao())
+				.append(" R$ ")
+				.append(tb.getValor())
+				.append("</option>");
+			}
+			// fim do foreach
+			sb.append("</select>");
 			sb.append("<input type='submit' value='Pesquisar'/>");
 			sb.append("<input type='reset' value='Limpar'/>");
 			sb.append("</form>");
@@ -139,8 +179,8 @@ public class ListaVeiculoServlet extends HttpServlet {
 		if (rodape) {
 			sb.append("</TABLE>");
 			sb.append("</HR>");
-			sb.append("</BODY>");
-			sb.append("<HTML>");
+			sb.append("</body>");
+			sb.append("<html>");
 		}
 		return sb.toString();
 	}

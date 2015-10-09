@@ -90,11 +90,11 @@ public class CadastroVeiculoServlet extends HttpServlet {
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a>");
 			sb.append("<form method='post' action='/EstacionamentoWeb/cadastrarveiculo'>");
 			sb.append("<label>Placa: </label>");
-			sb.append("<input type='text' size='7' name='edplaca'><br>");
+			sb.append("<input type='text' maxlength='7' name='edplaca'><br>");
 			sb.append("<label>Marca: </label>");
-			sb.append("<input type='text' size='20' name='edmarca'><br>");
+			sb.append("<input type='text' maxlength='20' name='edmarca'><br>");
 			sb.append("<label>Modelo: </label>");
-			sb.append("<input type='text' size='20' name='edmodelo'><br>");
+			sb.append("<input type='text' maxlength='20' name='edmodelo'><br>");
 			sb.append("<label>Tarifa: </label>");
 			sb.append("<select name='campo'>");
 		}
