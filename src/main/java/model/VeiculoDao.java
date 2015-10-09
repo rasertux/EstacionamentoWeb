@@ -83,9 +83,10 @@ public class VeiculoDao implements GenericDao {
 		conexao = Conexao.conectar();
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_BY_ID);
-			VeiculoBean veiculo = (VeiculoBean) objeto;
-			stmt.setString(1, veiculo.getPlaca());
+			String placa = (String) objeto;
+			stmt.setString(1, placa);
 			ResultSet rs = stmt.executeQuery();
+			VeiculoBean veiculo = new VeiculoBean();
 			while (rs.next()) {
 				TarifaDao dao = new TarifaDao();
 				veiculo = new VeiculoBean();
