@@ -42,8 +42,8 @@ public class CadastroTarifaServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Cadastro Com Sucesso&cor=green";
-		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro No Cadastro&cor=red";
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Operação realizada com sucesso!&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro na operacão&cor=red";
 		String descricao, valor;
 		descricao = request.getParameter("eddescricao");
 		valor = request.getParameter("edvalor");

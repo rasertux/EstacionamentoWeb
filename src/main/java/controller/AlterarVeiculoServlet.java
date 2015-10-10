@@ -106,7 +106,7 @@ public class AlterarVeiculoServlet extends HttpServlet {
 
 		if (rodape) {
 			sb.append("</select><br>");
-			sb.append("<input type='submit' value='Cadastrar'/>");
+			sb.append("<input type='submit' value='Alterar'/>");
 			sb.append("<input type='reset' value='Limpar'/>");
 			sb.append("</form>");
 			sb.append("<HR>");

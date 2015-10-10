@@ -63,21 +63,37 @@ public class AlterarTarifaServlet extends HttpServlet {
 	}
 
 	private String showFormulario(TarifaBean tarifa) {
-		return "<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='utf-8'>"
-				+ "<title>Cadastro de Tarifas</title>" + "</head>" + "<body bgcolor='#DCDCDC'>"
-				+ "  <h1> Tarifa - Alteração</h1>" + "  <hr>"
-				+ "  <form method='post' action='/EstacionamentoWeb/alterar'>"
-				+ "  Código:<input type='text' size='10' maxlength='10'" + "  value='" + tarifa.getIdtarifa() + "'"
-				+ "  name='edcodigo' readonly='true'/><br>" +
+		return "<!DOCTYPE html>" + "<html>" + "<head>"
+				+ "<title>Cadastro de Tarifas</title> <meta name='viewport' content='width=device-width, initial-scale=1'>"+
+"<meta name='author' content='David Martins, Rafael Sérgio' />"+
+"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>"+
+"<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>"+
+"<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>" + "</head>" + "<body class='container-fluid'>"+
+				"<div class='row'></div>" +
+				"<div class='col-sm-4'></div>" +
+				"<div class='col-sm-4'>" +
+				"<div class='panel panel-default' style='margin-top:50px;'>" +
+				"<div class='panel-heading text-center'><h1> Tarifa - Alteração</h1></div>"
+				+ "<div class='panel-body'>"
+				+ "  <form role='form' class='form-group' method='post' action='/EstacionamentoWeb/alterar'>"
+				+ "  <label>Código:</label><input class='form-control' type='text' size='10' maxlength='10'" + "  value='" + tarifa.getIdtarifa() + "'"
+				+ "  name='edcodigo' readonly='true'/>" +
 
-		"  Descrição:<input type='text' size='35' maxlength='30'" + "  value='" + tarifa.getDescricao() + "'"
-				+ "  name='eddescricao'/><br>" +
+		"  <label>Descrição:</label><input class='form-control' type='text' size='35' maxlength='30'" + "  value='" + tarifa.getDescricao() + "'"
+				+ "  name='eddescricao'/>" +
 
-		"  Valor:<input type='text' size='10' maxlength='10'" + "  value='" + tarifa.getValor() + "'"
-				+ "  name='edvalor'/><br>" +
+		"  <label>Valor:</label><input class='form-control' type='text' size='10' maxlength='10'" + "  value='" + tarifa.getValor() + "'"
+				+ "  name='edvalor'/><br />" +
 
-		"  <input type='submit' value='Cadastrar'/>" + "  <input type='reset'  value='Limpar'/>" + " </form>" + "  <hr>"
-				+ "  <a href='/Estacionamento/listar'>Listar Tarifa</a>" + "</body>" + "</html>";
+		"  <input type='submit' class='btn btn-default' value='Cadastrar'/>" + "  <input class='btn btn-default' type='reset'  value='Limpar'/>" + " </form>" + "  <hr>"
+				+ "  <a href='/EstacionamentoWeb/listar'>Listar Tarifa</a>" +
+		"</div>" +
+		"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>" +
+		"</div>" +
+		"</div>" +
+		"<div class='col-sm-4'></div>" +
+		"</div>"+
+		"</body>" + "</html>";
 	}
 
 }

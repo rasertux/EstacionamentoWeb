@@ -41,9 +41,13 @@ public class CadastroVeiculoServlet extends HttpServlet {
 		PrintWriter html = response.getWriter();
 		TarifaDao dao = new TarifaDao();
 		itens = dao.getItens();
-		for (int i = 0; i < itens.size(); i++) {
-			TarifaBean tarifa = (TarifaBean) itens.get(i);
-			html.print(gerarLinha(tarifa, (i == 0), (i == itens.size() - 1)));
+		if (itens.isEmpty()) {
+			html.print(anyTarifa());
+		} else {
+			for (int i = 0; i < itens.size(); i++) {
+				TarifaBean tarifa = (TarifaBean) itens.get(i);
+				html.print(gerarLinha(tarifa, (i == 0), (i == itens.size() - 1)));
+			}
 		}
 	}
 
@@ -83,20 +87,31 @@ public class CadastroVeiculoServlet extends HttpServlet {
 		StringBuilder sb = new StringBuilder();
 		if (cabecalho) {
 			sb.append("<HTML>");
-			sb.append("<HEAD><TITLE>CADASTRO DE VEICULOS</TITLE></HEAD>");
-			sb.append("<BODY>");
-			sb.append("<H1>CADASTRO DE VEICULOS</H1>");
-			sb.append("<HR>");
-			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a>");
-			sb.append("<form method='post' action='/EstacionamentoWeb/cadastrarveiculo'>");
+			sb.append("<HEAD><TITLE>Cadastro de Veículos</TITLE>");
+			sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+			sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
+			sb.append(
+					"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
+			sb.append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
+			sb.append("<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>");
+			sb.append("</HEAD>");
+			sb.append("<body class='container-fluid'>");
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-sm-4'></div>");
+			sb.append("<div class='col-sm-4'>");
+			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+			sb.append("<div class='panel-heading'><h1 class='text-center'>Cadastro de Veículo</h1>");
+			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+			sb.append("<div class='panel-body'>");
+			sb.append("<form role='form' class='form-group' method='post' action='/EstacionamentoWeb/cadastrarveiculo'>");
 			sb.append("<label>Placa: </label>");
-			sb.append("<input type='text' maxlength='7' name='edplaca'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='7' name='edplaca'><br>");
 			sb.append("<label>Marca: </label>");
-			sb.append("<input type='text' maxlength='20' name='edmarca'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='20' name='edmarca'><br>");
 			sb.append("<label>Modelo: </label>");
-			sb.append("<input type='text' maxlength='20' name='edmodelo'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='20' name='edmodelo'><br>");
 			sb.append("<label>Tarifa: </label>");
-			sb.append("<select name='campo'>");
+			sb.append("<select class='form-control' name='campo'>");
 		}
 
 		sb.append("<option value='").append(tarifa.getIdtarifa()).append("'>")
@@ -104,13 +119,51 @@ public class CadastroVeiculoServlet extends HttpServlet {
 
 		if (rodape) {
 			sb.append("</select><br>");
-			sb.append("<input type='submit' value='Cadastrar'/>");
-			sb.append("<input type='reset' value='Limpar'/>");
+			sb.append("<input class='btn btn-default' type='submit' value='Cadastrar'/>");
+			sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
 			sb.append("</form>");
-			sb.append("<HR>");
+			sb.append("</div>");
+			sb.append(
+					"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("<div class='col-sm-4'></div>");
 			sb.append("</BODY>");
 			sb.append("<HTML>");
 		}
+		return sb.toString();
+	}
+
+	private String anyTarifa() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<HTML>");
+		sb.append("<HEAD><TITLE>Cadastro de veículos</TITLE>");
+		sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+		sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
+		sb.append(
+				"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
+		sb.append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
+		sb.append("<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>");
+		sb.append("</HEAD>");
+		sb.append("<body class='container-fluid'>");
+		sb.append("<div class='row'>");
+		sb.append("<div class='col-sm-4'></div>");
+		sb.append("<div class='col-sm-4'>");
+		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+		sb.append("<div class='panel-heading'><h1 class='text-center'>Cadastro de Veículo</h1>");
+		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+		sb.append("<div class='panel-body'>");
+		sb.append("<div class='alert alert-warning'><strong>Ops!</strong> Nenhum cadastro encontrado.</div>");
+		sb.append("</div>");
+		sb.append(
+				"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class='col-sm-4'></div>");
+		sb.append("</BODY>");
+		sb.append("<HTML>");
 		return sb.toString();
 	}
 

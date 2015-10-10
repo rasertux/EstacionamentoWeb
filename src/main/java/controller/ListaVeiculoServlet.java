@@ -43,9 +43,15 @@ public class ListaVeiculoServlet extends HttpServlet {
 			VeiculoDao dao = new VeiculoDao();
 			itens = dao.getItens();
 		}
-		for (int i = 0; i < itens.size(); i++) {
-			VeiculoBean veiculo = (VeiculoBean) itens.get(i);
-			html.print(gerarLinha(veiculo, i, (i == 0), (i == itens.size() - 1)));
+		if (itens.isEmpty()) {
+			// não encontrou nenhum veiculo cadastrado
+			html.print(gerarListaVazia());
+
+		} else {
+			for (int i = 0; i < itens.size(); i++) {
+				VeiculoBean veiculo = (VeiculoBean) itens.get(i);
+				html.print(gerarLinha(veiculo, (i == 0), (i == itens.size() - 1)));
+			}
 		}
 	}
 
@@ -83,7 +89,7 @@ public class ListaVeiculoServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private String gerarLinha(VeiculoBean veiculo, int vcor, boolean cabecalho, boolean rodape) {
+	private String gerarLinha(VeiculoBean veiculo, boolean cabecalho, boolean rodape) {
 		String urlremover = "/EstacionamentoWeb/remover?placa=" + veiculo.getPlaca();
 		String urlalterar = "/EstacionamentoWeb/alterarveiculo?placa=" + veiculo.getPlaca();
 
@@ -93,7 +99,6 @@ public class ListaVeiculoServlet extends HttpServlet {
 		String remover = "<a href='" + urlremover + "'>" + imgremover + "</a>";
 		String alterar = "<a href='" + urlalterar + "'>" + imgalterar + "</a>";
 
-		String cor = (vcor % 2 == 0) ? "#6495ED" : "#483D8B";
 		StringBuilder sb = new StringBuilder();
 
 		List<Object> listaTarifas = null;
@@ -104,10 +109,14 @@ public class ListaVeiculoServlet extends HttpServlet {
 			sb.append("<html>");
 			sb.append("<head>");
 			sb.append("<title>LISTA DE VEICULOS</title>");
-			// javascript básico
+			sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+			sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
 			sb.append(
-					"<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js'></script>")
-					.append("<script type='text/javascript'>").append("$(document).ready(function(){")
+					"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
+			sb.append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
+			sb.append("<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>");
+			// javascript básico
+			sb.append("<script type='text/javascript'>").append("$(document).ready(function(){")
 					.append("	$('#tipo-pesquisa').change(function(){")
 					.append("			if($(this).val() == 'idtarifa') {")
 					.append("           	$('#pesquisa-padrao').hide();")
@@ -121,21 +130,26 @@ public class ListaVeiculoServlet extends HttpServlet {
 					.append("		});").append("	});").append("</script>");
 			// fim do js básico
 			sb.append("</head>");
-			sb.append("<body>");
-			sb.append("<H1>LISTAGEM DE VEICULOS</H1>");
-			sb.append("<HR>");
-			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a>");
-			sb.append("<form method='post' action='/EstacionamentoWeb/listarveiculo'>");
-			sb.append("Pesquisar por:");
-			sb.append("<select name='campo' id='tipo-pesquisa'>");
+			sb.append("<body class='container-fluid'>");
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-sm-2'></div>");
+			sb.append("<div class='col-sm-8'>");
+			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+			sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Veículos</h1>");
+			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+			sb.append("<div class='panel-body'>");
+			sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listarveiculo'>");
+			sb.append("<div class='form-group'><label>Pesquisar por:</label>");
+			sb.append("<select class='form-control' name='campo' id='tipo-pesquisa'>");
 			sb.append("<option value='todos'>Todos</option>");
 			sb.append("<option value='placa'>Placa</option>");
 			sb.append("<option value='marca'>Marca</option>");
 			sb.append("<option value='modelo'>Modelo</option>");
 			sb.append("<option value='idtarifa'>Tarifa</option>");
-			sb.append("</select>");
-			sb.append("Valor da pesquisa:<input type='text' id='pesquisa-padrao' name='edvalor'/>");
-			sb.append("<select style='display:none;' id='valor-select'>");
+			sb.append("</select></div>");
+			sb.append(
+					"<div class='form-group'><label>Valor da pesquisa:</label><input class='form-control' type='text' id='pesquisa-padrao' name='edvalor'/>");
+			sb.append("<select class='form-control' style='display:none;' id='valor-select'>");
 			// foreach criando options para cada tarifa
 			for (Object objeto : listaTarifas) {
 				TarifaBean tb = (TarifaBean) objeto;
@@ -143,12 +157,12 @@ public class ListaVeiculoServlet extends HttpServlet {
 						.append(" R$ ").append(tb.getValor()).append("</option>");
 			}
 			// fim do foreach
-			sb.append("</select>");
-			sb.append("<input type='submit' value='Pesquisar'/>");
-			sb.append("<input type='reset' value='Limpar'/>");
+			sb.append("</select></div>");
+			sb.append("<input class='btn btn-default' type='submit' value='Pesquisar'/>");
+			sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
 			sb.append("</form>");
-			sb.append("<TABLE WIDTH='50%'>");
-			sb.append("<TR bgcolor='#DCDCDC'>");
+			sb.append("<TABLE class='table table-striped'>");
+			sb.append("<TR>");
 			sb.append("<TH>").append("Placa").append("</TH>");
 			sb.append("<TH>").append("Marca").append("</TH>");
 			sb.append("<TH>").append("Modelo").append("</TH>");
@@ -157,7 +171,7 @@ public class ListaVeiculoServlet extends HttpServlet {
 			sb.append("</TR>");
 		}
 
-		sb.append("<TR bgcolor='").append(cor).append("'>");
+		sb.append("<TR>");
 		sb.append("<TD>").append(veiculo.getPlaca()).append("</TD>");
 		sb.append("<TD>").append(veiculo.getMarca()).append("</TD>");
 		sb.append("<TD>").append(veiculo.getModelo()).append("</TD>");
@@ -168,10 +182,98 @@ public class ListaVeiculoServlet extends HttpServlet {
 
 		if (rodape) {
 			sb.append("</TABLE>");
-			sb.append("</HR>");
+			sb.append("</div>");
+			sb.append(
+					"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("<div class='col-sm-2'></div>");
 			sb.append("</body>");
 			sb.append("<html>");
 		}
+		return sb.toString();
+	}
+
+	private String gerarListaVazia() {
+		List<Object> listaTarifas = null;
+		TarifaDao daoTarifas = new TarifaDao();
+		listaTarifas = daoTarifas.getItens();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<html>");
+		sb.append("<head>");
+		sb.append("<title>Lista de veículos</title>");
+		sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+		sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
+		sb.append(
+				"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
+		sb.append("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
+		sb.append("<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>");
+		// javascript básico
+		sb.append("<script type='text/javascript'>").append("$(document).ready(function(){")
+				.append("	$('#tipo-pesquisa').change(function(){")
+				.append("			if($(this).val() == 'idtarifa') {")
+				.append("           	$('#pesquisa-padrao').hide();").append("           	$('#valor-select').show();")
+				.append("           	$('#pesquisa-padrao').removeAttr('name');")
+				.append("           	$('#valor-select').attr('name', 'edvalor');").append("           } else {")
+				.append("           	$('#pesquisa-padrao').show();").append("           	$('#valor-select').hide();")
+				.append("           	$('#pesquisa-padrao').attr('name', 'edvalor');")
+				.append("           	$('#valor-select').removeAttr('name');").append("           }")
+				.append("		});").append("	});").append("</script>");
+		// fim do js básico
+		sb.append("</head>");
+		sb.append("<body class='container-fluid'>");
+		sb.append("<div class='row'>");
+		sb.append("<div class='col-sm-2'></div>");
+		sb.append("<div class='col-sm-8'>");
+		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+		sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Veículos</h1>");
+		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+		sb.append("<div class='panel-body'>");
+		sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listarveiculo'>");
+		sb.append("<div class='form-group'><label>Pesquisar por:</label>");
+		sb.append("<select class='form-control' name='campo' id='tipo-pesquisa'>");
+		sb.append("<option value='todos'>Todos</option>");
+		sb.append("<option value='placa'>Placa</option>");
+		sb.append("<option value='marca'>Marca</option>");
+		sb.append("<option value='modelo'>Modelo</option>");
+		sb.append("<option value='idtarifa'>Tarifa</option>");
+		sb.append("</select></div>");
+		sb.append(
+				"<div class='form-group'><label>Valor da pesquisa:</label><input class='form-control' type='text' id='pesquisa-padrao' name='edvalor'/>");
+		sb.append("<select class='form-control' style='display:none;' id='valor-select'>");
+		// foreach criando options para cada tarifa
+		for (Object objeto : listaTarifas) {
+			TarifaBean tb = (TarifaBean) objeto;
+			sb.append("<option value='").append(tb.getIdtarifa()).append("'>").append(tb.getDescricao()).append(" R$ ")
+					.append(tb.getValor()).append("</option>");
+		}
+		// fim do foreach
+		sb.append("</select></div>");
+		sb.append("<input class='btn btn-default' type='submit' value='Pesquisar'/>");
+		sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
+		sb.append("</form>");
+		sb.append("<TABLE class='table table-striped'>");
+		sb.append("<TR>");
+		sb.append("<TH>").append("Placa").append("</TH>");
+		sb.append("<TH>").append("Marca").append("</TH>");
+		sb.append("<TH>").append("Modelo").append("</TH>");
+		sb.append("<TH>").append("Tarifa").append("</TH>");
+		sb.append("<TH>").append("Ação").append("</TH>");
+		sb.append("</TR>");
+		sb.append("</TABLE>");
+		sb.append("</div>");
+		sb.append(
+				"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+		sb.append("</div>");
+		sb.append("<div class='alert alert-warning'><strong>Ops!</strong> Nenhum cadastro encontrado.</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class='col-sm-2'></div>");
+		sb.append("</body>");
+		sb.append("<html>");
 		return sb.toString();
 	}
 
