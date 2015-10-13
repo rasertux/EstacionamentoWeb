@@ -58,17 +58,25 @@ public class AlterarTarifaServlet extends HttpServlet {
 		tarifa.setDescricao(descricao);
 		tarifa.setValor(new Float(valor));
 		TarifaDao dao = new TarifaDao();
-		dao.alterar(tarifa);
-		response.sendRedirect("/EstacionamentoWeb/listar");
+		
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Operacao realizada com sucesso!&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro na operacao&cor=red";
+		
+		if(dao.alterar(tarifa)) {
+			response.sendRedirect(SUCESSO);
+		} else {
+			response.sendRedirect(ERRO);
+		}
+		
 	}
 
 	private String showFormulario(TarifaBean tarifa) {
 		return "<!DOCTYPE html>" + "<html>" + "<head>"
 				+ "<title>Cadastro de Tarifas</title> <meta name='viewport' content='width=device-width, initial-scale=1'>"+
 "<meta name='author' content='David Martins, Rafael Sérgio' />"+
-"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>"+
-"<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>"+
-"<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>" + "</head>" + "<body class='container-fluid'>"+
+"<link rel='stylesheet' href='css/bootstrap.min.css'>"+
+"<script src='js/jquery-1.11.3.min.js'></script>"+
+"<script src='js/bootstrap.min.js'></script>" + "</head>" + "<body class='container-fluid'>"+
 				"<div class='row'></div>" +
 				"<div class='col-sm-4'></div>" +
 				"<div class='col-sm-4'>" +
@@ -85,7 +93,7 @@ public class AlterarTarifaServlet extends HttpServlet {
 		"  <label>Valor:</label><input class='form-control' type='text' size='10' maxlength='10'" + "  value='" + tarifa.getValor() + "'"
 				+ "  name='edvalor'/><br />" +
 
-		"  <input type='submit' class='btn btn-default' value='Cadastrar'/>" + "  <input class='btn btn-default' type='reset'  value='Limpar'/>" + " </form>" + "  <hr>"
+		"  <input type='submit' class='btn btn-default' value='Alterar'/>" + "  <input class='btn btn-default' type='reset'  value='Limpar'/>" + " </form>" + "  <hr>"
 				+ "  <a href='/EstacionamentoWeb/listar'>Listar Tarifa</a>" +
 		"</div>" +
 		"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>" +

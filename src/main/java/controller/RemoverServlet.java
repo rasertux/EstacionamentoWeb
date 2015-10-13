@@ -31,19 +31,32 @@ public class RemoverServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String valor = request.getParameter("id");
+		
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Operacao realizada com sucesso!&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro na operacao&cor=red";
+		boolean operacao = false;
+		
 		if (valor != null) {
 			Integer id = new Integer(valor);
 			TarifaDao dao = new TarifaDao();
-			dao.remover(id);
+			if(dao.remover(id)) {
+				operacao = true;
+			}
 		} else {
 			String placa = request.getParameter("placa");
 			if (placa != null) {
 				VeiculoDao dao = new VeiculoDao();
-				dao.remover(placa);
+				if(dao.remover(placa)) {
+					operacao = true;
+				} 
 			}
 		}
+		if(operacao) {
+			response.sendRedirect(SUCESSO);
+		} else {
+			response.sendRedirect(ERRO);
+		}
 
-		response.sendRedirect("/EstacionamentoWeb/index.html");
 	}
 
 	/**

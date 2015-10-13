@@ -31,16 +31,16 @@ public class AvisoServlet extends HttpServlet {
 		String mensagem, cor, voltar;
 		mensagem = request.getParameter("msg");
 		cor = request.getParameter("cor");
-		voltar = "/EstacionamentoWeb/index.html";
+		voltar = request.getHeader("Referer");
 		PrintWriter html = response.getWriter();
 		html.print("<HTML> ");
 		html.print("<HEAD><TITLE>Cadastro de Veículos</TITLE>");
 		html.print("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 		html.print("<meta name='author' content='David Martins, Rafael Sérgio' />");
 		html.print(
-				"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>");
-		html.print("<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>");
-		html.print("<script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>");
+				"<link rel='stylesheet' href='css/bootstrap.min.css'>");
+		html.print("<script src='js/jquery-1.11.3.min.js'></script>");
+		html.print("<script src='js/bootstrap.min.js'></script>");
 		html.print("</HEAD>");
 		html.print("<body class='container-fluid'>");
 		html.print("<div class='row'>");

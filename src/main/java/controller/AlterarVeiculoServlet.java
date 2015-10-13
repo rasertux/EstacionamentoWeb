@@ -65,6 +65,9 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		String marca = request.getParameter("edmarca");
 		String modelo = request.getParameter("edmodelo");
 		tarifa.setIdtarifa(new Integer(request.getParameter("idtarifa")));
+		
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Operacao realizada com sucesso!&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro na operacao&cor=red";
 
 		veiculo.setPlaca(placa);
 		veiculo.setMarca(marca);
@@ -72,31 +75,44 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		veiculo.setIdtarifa(tarifa);
 		VeiculoDao dao = new VeiculoDao();
 		dao.alterar(veiculo);
-		response.sendRedirect("/EstacionamentoWeb/listarveiculo");
+		if(dao.alterar(veiculo)) {
+			response.sendRedirect(SUCESSO);
+		} else {
+			response.sendRedirect(ERRO);
+		}
+		
 	}
 
 	private String gerarLinha(VeiculoBean veiculo, TarifaBean tarifa, boolean cabecalho, boolean rodape) {
 		StringBuilder sb = new StringBuilder();
 		if (cabecalho) {
 			sb.append("<HTML>");
-			sb.append("<HEAD><TITLE>CADASTRO DE VEICULOS</TITLE></HEAD>");
-			sb.append("<BODY>");
-			sb.append("<H1>CADASTRO DE VEICULOS</H1>");
-			sb.append("<HR>");
-			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a>");
-			sb.append("<form method='post' action='/EstacionamentoWeb/alterarveiculo'>");
+			sb.append("<HEAD><TITLE>Alteração de Veículo</TITLE>")
+			.append("<link rel='stylesheet' href='css/bootstrap.min.css' />")
+			.append("<script type='text/javascript' src='js/jquery-1.11.3.min.js'></script>")
+			.append("<script type='text/javascript' src='js/bootstrap.min.js'></script>")
+			.append("</HEAD>");
+			sb.append("<body class='container-fluid'>");
+			sb.append("<div class='row'>");
+			sb.append("<div class='col-sm-4'></div>");
+			sb.append("<div class='col-sm-4'>");
+			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+			sb.append("<div class='panel-heading'><h1 class='text-center'>Alteração de Veículo</h1>");
+			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+			sb.append("<div class='panel-body'>");
+			sb.append("<form method='post' class='form-group' role='form' action='/EstacionamentoWeb/alterarveiculo'>");
 			sb.append("<label>Placa: </label>");
 			sb.append(
-					"<input type='text' maxlength='7' name='edplaca' readonly value='" + veiculo.getPlaca() + "'><br>");
+					"<input class='form-control' type='text' maxlength='7' name='edplaca' readonly value='" + veiculo.getPlaca() + "'><br>");
 			sb.append("<label>Marca: </label>");
-			sb.append("<input type='text' maxlength='20' name='edmarca' value='" + veiculo.getMarca() + "'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='20' name='edmarca' value='" + veiculo.getMarca() + "'><br>");
 			sb.append("<label>Modelo: </label>");
-			sb.append("<input type='text' maxlength='20' name='edmodelo' value='" + veiculo.getModelo() + "'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='20' name='edmodelo' value='" + veiculo.getModelo() + "'><br>");
 			sb.append("<label>Tarifa: </label>");
-			sb.append("<select name='idtarifa'>");
-			sb.append("<option selected='").append(veiculo.getIdtarifa().getIdtarifa()).append("'>")
+			sb.append("<select class='form-control' name='idtarifa'>");
+			sb.append("<option value='").append(veiculo.getIdtarifa().getIdtarifa()).append("'>")
 					.append(veiculo.getIdtarifa().getDescricao() + " R$" + veiculo.getIdtarifa().getValor())
-					.append("</option>)");
+					.append("</option>");
 		}
 
 		if (tarifa.getIdtarifa() != veiculo.getIdtarifa().getIdtarifa()) {
@@ -106,10 +122,15 @@ public class AlterarVeiculoServlet extends HttpServlet {
 
 		if (rodape) {
 			sb.append("</select><br>");
-			sb.append("<input type='submit' value='Alterar'/>");
-			sb.append("<input type='reset' value='Limpar'/>");
+			sb.append("<input class='btn btn-default' type='submit' value='Alterar'/>");
+			sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
 			sb.append("</form>");
-			sb.append("<HR>");
+			sb.append("</div>");
+			sb.append(
+					"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+			sb.append("</div>");
+			sb.append("</div>");
+			sb.append("<div class='col-sm-4'></div>");
 			sb.append("</BODY>");
 			sb.append("<HTML>");
 		}
