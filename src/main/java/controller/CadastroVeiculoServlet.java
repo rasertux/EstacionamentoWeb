@@ -90,8 +90,7 @@ public class CadastroVeiculoServlet extends HttpServlet {
 			sb.append("<HEAD><TITLE>Cadastro de Veículos</TITLE>");
 			sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 			sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
-			sb.append(
-					"<link rel='stylesheet' href='css/bootstrap.min.css'>");
+			sb.append("<link rel='stylesheet' href='css/bootstrap.min.css'>");
 			sb.append("<script src='js/jquery-1.11.3.min.js'></script>");
 			sb.append("<script src='js/bootstrap.min.js'></script>");
 			sb.append("</HEAD>");
@@ -103,13 +102,15 @@ public class CadastroVeiculoServlet extends HttpServlet {
 			sb.append("<div class='panel-heading'><h1 class='text-center'>Cadastro de Veículo</h1>");
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 			sb.append("<div class='panel-body'>");
-			sb.append("<form role='form' class='form-group' method='post' action='/EstacionamentoWeb/cadastrarveiculo'>");
+			sb.append(
+					"<form role='form' class='form-group' method='post' action='/EstacionamentoWeb/cadastrarveiculo'>");
 			sb.append("<label>Placa: </label>");
-			sb.append("<input class='form-control' type='text' maxlength='7' name='edplaca'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='7' name='edplaca' required='required'><br>");
 			sb.append("<label>Marca: </label>");
-			sb.append("<input class='form-control' type='text' maxlength='20' name='edmarca'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='20' name='edmarca' required='required'><br>");
 			sb.append("<label>Modelo: </label>");
-			sb.append("<input class='form-control' type='text' maxlength='20' name='edmodelo'><br>");
+			sb.append(
+					"<input class='form-control' type='text' maxlength='20' name='edmodelo' required='required'><br>");
 			sb.append("<label>Tarifa: </label>");
 			sb.append("<select class='form-control' name='campo'>");
 		}

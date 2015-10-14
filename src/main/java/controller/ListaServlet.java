@@ -67,7 +67,7 @@ public class ListaServlet extends HttpServlet {
 		if (op.equals("todos"))
 			itens = dao.getItens();
 		else if (op.equals("idtarifa"))
-			itens = dao.getItensPor(" where idtarifa =" + vlr);
+			itens = dao.getItensPor(" where idtarifa like '%" + vlr + "%'");
 		else
 			itens = dao.getItensPor(" where descricao like '%" + vlr + "%'");
 
@@ -92,8 +92,7 @@ public class ListaServlet extends HttpServlet {
 			sb.append("<head><TITLE>Lista de tarifas</TITLE></HEAD>");
 			sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 			sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
-			sb.append(
-					"<link rel='stylesheet' href='css/bootstrap.min.css'>");
+			sb.append("<link rel='stylesheet' href='css/bootstrap.min.css'>");
 			sb.append("<script src='js/jquery-1.11.3.min.js'></script>");
 			sb.append("<script src='js/bootstrap.min.js'></script>");
 			sb.append("<body class='container-fluid'>");

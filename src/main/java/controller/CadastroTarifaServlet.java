@@ -48,7 +48,7 @@ public class CadastroTarifaServlet extends HttpServlet {
 		descricao = request.getParameter("eddescricao");
 		valor = request.getParameter("edvalor");
 		if (descricao == null || descricao.isEmpty() || valor == null || valor.isEmpty()) {
-			response.sendRedirect("cadastrodetarifa.html");
+			response.sendRedirect("cadastrotarifa.html");
 		} else {
 			TarifaBean tarifa = new TarifaBean();
 			tarifa.setIdtarifa(0);
