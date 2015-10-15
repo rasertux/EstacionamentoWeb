@@ -65,7 +65,7 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		String marca = request.getParameter("edmarca");
 		String modelo = request.getParameter("edmodelo");
 		tarifa.setIdtarifa(new Integer(request.getParameter("idtarifa")));
-		
+
 		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Operacao realizada com sucesso!&cor=green";
 		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro na operacao&cor=red";
 
@@ -75,12 +75,12 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		veiculo.setIdtarifa(tarifa);
 		VeiculoDao dao = new VeiculoDao();
 		dao.alterar(veiculo);
-		if(dao.alterar(veiculo)) {
+		if (dao.alterar(veiculo)) {
 			response.sendRedirect(SUCESSO);
 		} else {
 			response.sendRedirect(ERRO);
 		}
-		
+
 	}
 
 	private String gerarLinha(VeiculoBean veiculo, TarifaBean tarifa, boolean cabecalho, boolean rodape) {
@@ -88,10 +88,9 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		if (cabecalho) {
 			sb.append("<HTML>");
 			sb.append("<HEAD><TITLE>Alteração de Veículo</TITLE>")
-			.append("<link rel='stylesheet' href='css/bootstrap.min.css' />")
-			.append("<script type='text/javascript' src='js/jquery-1.11.3.min.js'></script>")
-			.append("<script type='text/javascript' src='js/bootstrap.min.js'></script>")
-			.append("</HEAD>");
+					.append("<link rel='stylesheet' href='css/bootstrap.min.css' />")
+					.append("<script type='text/javascript' src='js/jquery-1.11.3.min.js'></script>")
+					.append("<script type='text/javascript' src='js/bootstrap.min.js'></script>").append("</HEAD>");
 			sb.append("<body class='container-fluid'>");
 			sb.append("<div class='row'>");
 			sb.append("<div class='col-sm-4'></div>");
@@ -102,12 +101,16 @@ public class AlterarVeiculoServlet extends HttpServlet {
 			sb.append("<div class='panel-body'>");
 			sb.append("<form method='post' class='form-group' role='form' action='/EstacionamentoWeb/alterarveiculo'>");
 			sb.append("<label>Placa: </label>");
-			sb.append(
-					"<input class='form-control' type='text' maxlength='7' name='edplaca' readonly value='" + veiculo.getPlaca() + "'><br>");
+			sb.append("<input class='form-control' type='text' maxlength='7' name='edplaca' readonly value='"
+					+ veiculo.getPlaca() + "'><br>");
 			sb.append("<label>Marca: </label>");
-			sb.append("<input class='form-control' type='text' maxlength='20' name='edmarca' value='" + veiculo.getMarca() + "'><br>");
+			sb.append(
+					"<input class='form-control' type='text' required='required' maxlength='20' name='edmarca' value='"
+							+ veiculo.getMarca() + "'><br>");
 			sb.append("<label>Modelo: </label>");
-			sb.append("<input class='form-control' type='text' maxlength='20' name='edmodelo' value='" + veiculo.getModelo() + "'><br>");
+			sb.append(
+					"<input class='form-control' type='text' required='required' maxlength='20' name='edmodelo' value='"
+							+ veiculo.getModelo() + "'><br>");
 			sb.append("<label>Tarifa: </label>");
 			sb.append("<select class='form-control' name='idtarifa'>");
 			sb.append("<option value='").append(veiculo.getIdtarifa().getIdtarifa()).append("'>")
@@ -123,7 +126,8 @@ public class AlterarVeiculoServlet extends HttpServlet {
 		if (rodape) {
 			sb.append("</select><br>");
 			sb.append("<input class='btn btn-default' type='submit' value='Alterar'/>");
-			sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
+			sb.append("<hr>");
+			sb.append("<a href='/EstacionamentoWeb/listarveiculo'>Listar Veículos</a>");
 			sb.append("</form>");
 			sb.append("</div>");
 			sb.append(

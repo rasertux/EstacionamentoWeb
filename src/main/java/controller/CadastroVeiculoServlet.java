@@ -122,6 +122,8 @@ public class CadastroVeiculoServlet extends HttpServlet {
 			sb.append("</select><br>");
 			sb.append("<input class='btn btn-default' type='submit' value='Cadastrar'/>");
 			sb.append("<input class='btn btn-default' type='reset' value='Limpar'/>");
+			sb.append("<hr>");
+			sb.append("<a href='/EstacionamentoWeb/listarveiculo'>Listar Veículos</a>");
 			sb.append("</form>");
 			sb.append("</div>");
 			sb.append(
