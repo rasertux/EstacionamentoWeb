@@ -15,73 +15,94 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/aviso")
 public class AvisoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AvisoServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String mensagem, cor, voltar;
-		mensagem = request.getParameter("msg");
-		cor = request.getParameter("cor");
-		voltar = request.getHeader("Referer");
-		PrintWriter html = response.getWriter();
-		html.print("<HTML> ");
-		html.print("<HEAD><TITLE>Cadastro de Veículos</TITLE>");
-		html.print("<meta name='viewport' content='width=device-width, initial-scale=1'>");
-		html.print("<meta name='author' content='David Martins, Rafael Sérgio' />");
-		html.print(
-				"<link rel='stylesheet' href='css/bootstrap.min.css'>");
-		html.print("<script src='js/jquery-1.11.3.min.js'></script>");
-		html.print("<script src='js/bootstrap.min.js'></script>");
-		html.print("</HEAD>");
-		html.print("<body class='container-fluid'>");
-		html.print("<div class='row'>");
-		html.print("<div class='col-sm-4'></div>");
-		html.print("<div class='col-sm-4'>");
-		html.print("<div class='panel panel-default' style='margin-top:50px;'>");
-		html.print("<div class='panel-heading'><h1 class='text-center'>Cadastro de Veículo</h1>");
-		html.print("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
-		html.print("<div class='panel-body'>");
-		
-		if(cor.equals("green")) {
-			html.print("<div class='alert alert-success'>");
-			html.print("<strong>Info! </strong>");
-			html.print(mensagem);
-			html.print("</div>");
-		}
-		else if(cor.equals("red")) {
-			html.print("<div class='alert alert-danger'>");
-			html.print("<strong>Ops! </strong>");
-			html.print(mensagem);
-			html.print("</div>");
-		}
-		html.print("<a href='"+voltar+"'>Voltar</a>");
-		
-		html.print("</div>");
-		html.print(
-				"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
-		html.print("</div>");
-		html.print("</div>");
-		html.print("</div>");
-		html.print("<div class='col-sm-4'></div>");
-		html.print("</BODY>");
-		html.print("</HTML> ");
+	public AvisoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String mensagem, cor, voltar, titulo, listar, cadastrar;
+		mensagem = request.getParameter("msg");
+		cor = request.getParameter("cor");
+		voltar = request.getHeader("Referer");
+		if (voltar.contains("veiculo")) {
+
+			titulo = "Cadastro de Veículo";
+			cadastrar = "/EstacionamentoWeb/cadastrarveiculo";
+			listar = "/EstacionamentoWeb/listarveiculo";
+		} else {
+			titulo = "Cadastro de Tarifa";
+			cadastrar = "/EstacionamentoWeb/cadastrotarifa.html";
+			listar = "/EstacionamentoWeb/listar";
+		}
+		PrintWriter html = response.getWriter();
+		html.print(geraHtml(mensagem, cor, titulo, listar, cadastrar));
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+
+	private String geraHtml(String mensagem, String cor, String titulo, String listar,
+			String cadastrar) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<HTML> ");
+		sb.append("<HEAD><TITLE>" + titulo + "</TITLE>");
+		sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+		sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
+		sb.append("<link rel='stylesheet' href='css/bootstrap.min.css'>");
+		sb.append("<script src='js/jquery-1.11.3.min.js'></script>");
+		sb.append("<script src='js/bootstrap.min.js'></script>");
+		sb.append("</HEAD>");
+		sb.append("<body class='container-fluid'>");
+		sb.append("<div class='row'>");
+		sb.append("<div class='col-sm-4'></div>");
+		sb.append("<div class='col-sm-4'>");
+		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
+		sb.append("<div class='panel-heading'><h1 class='text-center'>" + titulo + "</h1>");
+		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
+		sb.append("<div class='panel-body'>");
+
+		if (cor.equals("green")) {
+			sb.append("<div class='alert alert-success'>");
+			sb.append("<strong>Info! </strong>");
+			sb.append(mensagem);
+			sb.append("</div>");
+		} else if (cor.equals("red")) {
+			sb.append("<div class='alert alert-danger'>");
+			sb.append("<strong>Ops! </strong>");
+			sb.append(mensagem);
+			sb.append("</div>");
+		}
+		sb.append("<a href='" + cadastrar + "'>Cadastrar</a>");
+		sb.append(" | ");
+		sb.append("<a href='" + listar + "'>Listar</a>");
+
+		sb.append("</div>");
+		sb.append(
+				"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("</div>");
+		sb.append("<div class='col-sm-4'></div>");
+		sb.append("</BODY>");
+		sb.append("</HTML> ");
+		return sb.toString();
 	}
 
 }
