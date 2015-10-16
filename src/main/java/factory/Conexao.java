@@ -18,7 +18,7 @@ public class Conexao {
 
 	public static void fecharConexao(Connection conexao) {
 		try {
-			if (conexao != null && conexao.isClosed()) {
+			if (conexao != null && !conexao.isClosed()) {
 				conexao.close();
 				conexao = null;
 			}
