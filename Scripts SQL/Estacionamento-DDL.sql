@@ -22,7 +22,7 @@ create table veiculo(
 create table usuario(
 	nome varchar(30) not null,
 	login varchar(20) not null,
-	senha varchar(20) not null,
+	senha varchar(32) not null,
 	email varchar(30) not null,
 	primary key(login)
 );

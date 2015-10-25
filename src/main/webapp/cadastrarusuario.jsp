@@ -23,6 +23,21 @@
 					<a href='/EstacionamentoWeb/index.html'> Menu</a>
 				</div>
 				<div class='panel-body'>
+					<%
+						if (request.getMethod().equalsIgnoreCase("POST")) {
+							UsuarioBean usuario = new UsuarioBean();
+							usuario.setNome(request.getParameter("ednome"));
+							usuario.setLogin(request.getParameter("edlogin"));
+							usuario.setSenha(request.getParameter("edsenha"));
+							usuario.setEmail(request.getParameter("edemail"));
+
+							if (UsuarioDao.inserirUsuario(usuario)) {
+								response.sendRedirect("/EstacionamentoWeb/listarusuarios.jsp");
+							} else {
+								out.println("<div class='alert alert-warning'><strong>Ops!</strong> Erro ao cadastrar!</div>");
+							}
+						}
+					%>
 					<form role='form' class='form-group' action="cadastrarusuario.jsp"
 						method="post">
 						<label>Nome: </label> <input class='form-control' type="text"
@@ -47,18 +62,3 @@
 	<div class='col-sm-4'></div>
 </body>
 </html>
-<%
-	if (request.getMethod().equalsIgnoreCase("POST")) {
-		UsuarioBean usuario = new UsuarioBean();
-		usuario.setNome(request.getParameter("ednome"));
-		usuario.setLogin(request.getParameter("edlogin"));
-		usuario.setSenha(request.getParameter("edsenha"));
-		usuario.setEmail(request.getParameter("edemail"));
-
-		if (UsuarioDao.inserirUsuario(usuario)) {
-			response.sendRedirect("/EstacionamentoWeb/listarusuarios.jsp");
-		} else {
-			out.println("<span>Erro ao cadastrar</span>");
-		}
-	}
-%>

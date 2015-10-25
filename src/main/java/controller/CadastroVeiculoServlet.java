@@ -157,7 +157,8 @@ public class CadastroVeiculoServlet extends HttpServlet {
 		sb.append("<div class='panel-heading'><h1 class='text-center'>Cadastro de Veículo</h1>");
 		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 		sb.append("<div class='panel-body'>");
-		sb.append("<div class='alert alert-warning'><strong>Ops!</strong> Nenhum cadastro encontrado.</div>");
+		sb.append(
+				"<div class='alert alert-warning'><strong>Ops!</strong> Nenhuma Tarifa Cadastrada, cadastre uma Tarifa antes.</div>");
 		sb.append("</div>");
 		sb.append(
 				"<div class='panel-footer'><small>&copy <a href='https://github.com/DaveKun' target='_blank'>David Martins</a>, <a target='_blank' href='https://github.com/rasertux'>Rafael Sérgio</a></small></div>");

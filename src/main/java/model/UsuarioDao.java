@@ -1,5 +1,7 @@
 package model;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,9 +22,10 @@ public class UsuarioDao {
 		conexao = Conexao.conectar();
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_INSERT);
+			String senhacript = criptografaSenha(usuario.getSenha());
 			stmt.setString(1, usuario.getNome());
 			stmt.setString(2, usuario.getLogin());
-			stmt.setString(3, usuario.getSenha());
+			stmt.setString(3, senhacript);
 			stmt.setString(4, usuario.getEmail());
 			stmt.execute();
 			stmt.close();
@@ -80,8 +83,9 @@ public class UsuarioDao {
 		conexao = Conexao.conectar();
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_UPDATE);
+			String senhacript = criptografaSenha(usuario.getSenha());
 			stmt.setString(1, usuario.getNome());
-			stmt.setString(2, usuario.getSenha());
+			stmt.setString(2, senhacript);
 			stmt.setString(3, usuario.getEmail());
 			stmt.setString(4, usuario.getLogin());
 			stmt.execute();
@@ -99,9 +103,10 @@ public class UsuarioDao {
 		conexao = Conexao.conectar();
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_USER);
+			String senhacript = criptografaSenha(senha);
 			stmt.setString(1, login);
-			stmt.setString(2, senha);
-			UsuarioBean usuario = null;;
+			stmt.setString(2, senhacript);
+			UsuarioBean usuario = null;
 			ResultSet rs = null;
 			rs = stmt.executeQuery();
 			while (rs.next()) {
@@ -118,6 +123,30 @@ public class UsuarioDao {
 		} finally {
 			Conexao.fecharConexao(conexao);
 		}
+	}
+
+	public static String criptografaSenha(String senha) {
+		String senhacript = null;
+		try {
+			// Create MessageDigest instance for MD5
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			// Add password bytes to digest
+			md.update(senha.getBytes());
+			// Get the hash's bytes
+			byte[] bytes = md.digest();
+			// This bytes[] has bytes in decimal format;
+			// Convert it to hexadecimal format
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			// Get complete hashed password in hex format
+			senhacript = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return senhacript;
 	}
 
 }

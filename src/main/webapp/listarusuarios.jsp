@@ -38,14 +38,18 @@
 							String imgalterar = "<img src='alterar.png' width='8%'>";
 							ArrayList<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
 							usuarios = UsuarioDao.getItens();
-							for (UsuarioBean usuario : usuarios) {
-								out.println("<tr>");
-								out.println("<td>" + usuario.getNome() + "</td>");
-								out.println("<td>" + usuario.getLogin() + "</td>");
-								out.println("<td>" + usuario.getEmail() + "</td>");
-								out.println("<td><a href='" + urlremover + usuario.getLogin() + "'>" + imgremover + "</a> | <a href='"
-										+ urlalterar + usuario.getLogin() + "'>" + imgalterar + "</a></td>");
-								out.println("</tr>");
+							if (!usuarios.isEmpty()) {
+								for (UsuarioBean usuario : usuarios) {
+									out.println("<tr>");
+									out.println("<td>" + usuario.getNome() + "</td>");
+									out.println("<td>" + usuario.getLogin() + "</td>");
+									out.println("<td>" + usuario.getEmail() + "</td>");
+									out.println("<td><a href='" + urlremover + usuario.getLogin() + "'>" + imgremover
+											+ "</a> | <a href='" + urlalterar + usuario.getLogin() + "'>" + imgalterar + "</a></td>");
+									out.println("</tr>");
+								}
+							} else {
+								out.println("<div class='alert alert-warning'><strong>Ops!</strong> Nenhum cadastro encontrado.</div>");
 							}
 						%>
 					</table>
