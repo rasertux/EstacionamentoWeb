@@ -34,7 +34,7 @@
 							if (UsuarioDao.inserirUsuario(usuario)) {
 								response.sendRedirect("/EstacionamentoWeb/listarusuarios.jsp");
 							} else {
-								out.println("<div class='alert alert-warning'><strong>Ops!</strong> Erro ao cadastrar!</div>");
+								out.println("<div class='alert alert-danger'><strong>Ops!</strong> Erro ao cadastrar!</div>");
 							}
 						}
 					%>

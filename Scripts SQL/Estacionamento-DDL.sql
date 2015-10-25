@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS estacionamento;
+
 create database estacionamento;
 
 use estacionamento;
@@ -21,7 +23,7 @@ create table veiculo(
 
 create table usuario(
 	nome varchar(30) not null,
-	login varchar(20) not null,
+	login varchar(20) not null unique,
 	senha varchar(32) not null,
 	email varchar(30) not null,
 	primary key(login)

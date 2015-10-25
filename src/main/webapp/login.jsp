@@ -1,3 +1,7 @@
+<%@page import="model.UsuarioDao"%>
+<%@page import="model.UsuarioBean"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +22,25 @@
 					<h1>Login</h1>
 				</div>
 				<div class="panel-body">
+					<%
+if (request.getMethod().equalsIgnoreCase("POST")) {
+		String login, senha;
+		login = request.getParameter("edlogin");
+		senha = request.getParameter("edsenha");
+		if ((login == null) || (login.isEmpty()) || (senha == null) || (senha.isEmpty())) {
+			response.sendRedirect("/EstacionamentoWeb/login.jsp");
+		} else {
+			UsuarioBean logado = UsuarioDao.getUsuarioLogin(login, senha);
+			if (logado == null) {
+				out.println("<div class='alert alert-danger'><strong>Ops!</strong> Usuário e/ou senha inválidos!</div>");
+			} else {
+				response.sendRedirect("/EstacionamentoWeb/index.html");
+			}
+		}
+}
+	%>
 					<form role='form' class='form-group'
-						action="/EstacionamentoWeb/validarlogin.jsp" method="post">
+						action="/EstacionamentoWeb/login.jsp" method="post">
 						<label>Login:</label> <input class='form-control' type="text"
 							name="edlogin" size="20"><br> <label>Senha:</label>
 						<input class='form-control' type="password" name="edsenha"
