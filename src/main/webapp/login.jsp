@@ -23,22 +23,22 @@
 				</div>
 				<div class="panel-body">
 					<%
-if (request.getMethod().equalsIgnoreCase("POST")) {
-		String login, senha;
-		login = request.getParameter("edlogin");
-		senha = request.getParameter("edsenha");
-		if ((login == null) || (login.isEmpty()) || (senha == null) || (senha.isEmpty())) {
-			response.sendRedirect("/EstacionamentoWeb/login.jsp");
-		} else {
-			UsuarioBean logado = UsuarioDao.getUsuarioLogin(login, senha);
-			if (logado == null) {
-				out.println("<div class='alert alert-danger'><strong>Ops!</strong> Usuário e/ou senha inválidos!</div>");
-			} else {
-				response.sendRedirect("/EstacionamentoWeb/index.html");
-			}
-		}
-}
-	%>
+						if (request.getMethod().equalsIgnoreCase("POST")) {
+							String login, senha;
+							login = request.getParameter("edlogin");
+							senha = request.getParameter("edsenha");
+							if ((login == null) || (login.isEmpty()) || (senha == null) || (senha.isEmpty())) {
+								out.println("<div class='alert alert-danger'><strong>Ops!</strong> Informe o usuário e a senha para acessar o sistema.</div>");
+							} else {
+								UsuarioBean logado = UsuarioDao.getUsuarioLogin(login, senha);
+								if (logado == null) {
+									out.println("<div class='alert alert-danger'><strong>Ops!</strong> Usuário e/ou senha inválidos!</div>");
+								} else {
+									response.sendRedirect("/EstacionamentoWeb/index.html");
+								}
+							}
+						}
+					%>
 					<form role='form' class='form-group'
 						action="/EstacionamentoWeb/login.jsp" method="post">
 						<label>Login:</label> <input class='form-control' type="text"
