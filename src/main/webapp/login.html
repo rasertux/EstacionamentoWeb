@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="David Martins, Rafael Sérgio" />
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+</head>
+<body class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3"></div>
+		<div class="col-sm-6">
+			<div class="panel panel-default" style="margin-top: 50px;">
+				<div class="panel-heading text-center">
+					<h1>Login</h1>
+				</div>
+				<div class="panel-body">
+					<form role='form' class='form-group'
+						action="/EstacionamentoWeb/validarlogin.jsp" method="post">
+						<label>Login:</label> <input class='form-control' type="text"
+							name="edlogin" size="20"><br> <label>Senha:</label>
+						<input class='form-control' type="password" name="edsenha"
+							size="20"><br> <a href="">Esqueceu a Senha?</a><br>
+						<input class='btn btn-default' type="submit" value="Login">
+					</form>
+				</div>
+				<div class="panel-footer">
+					<small>&copy <a href="https://github.com/DaveKun"
+						target="_blank">David Martins</a>, <a target="_blank"
+						href="https://github.com/rasertux">Rafael Sérgio</a></small>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-3"></div>
+	</div>
+</body>
+</html>
