@@ -9,9 +9,9 @@
 <title>Login</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="author" content="David Martins, Rafael Sérgio" />
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body class="container-fluid">
 	<div class="row">
@@ -28,12 +28,15 @@
 							login = request.getParameter("edlogin");
 							senha = request.getParameter("edsenha");
 							if ((login == null) || (login.isEmpty()) || (senha == null) || (senha.isEmpty())) {
-								out.println("<div class='alert alert-danger'><strong>Ops!</strong> Informe o usuário e a senha para acessar o sistema.</div>");
+								out.println(
+										"<div class='alert alert-danger'><strong>Ops!</strong> Informe o usuário e a senha para acessar o sistema.</div>");
 							} else {
 								UsuarioBean logado = UsuarioDao.getUsuarioLogin(login, senha);
 								if (logado == null) {
-									out.println("<div class='alert alert-danger'><strong>Ops!</strong> Usuário e/ou senha inválidos!</div>");
+									out.println(
+											"<div class='alert alert-danger'><strong>Ops!</strong> Usuário e/ou senha inválidos!</div>");
 								} else {
+									request.getSession().setAttribute("usuario", logado);
 									response.sendRedirect("/EstacionamentoWeb/index.html");
 								}
 							}
