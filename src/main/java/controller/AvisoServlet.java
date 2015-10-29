@@ -58,8 +58,7 @@ public class AvisoServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	private String geraHtml(String mensagem, String cor, String titulo, String listar,
-			String cadastrar) {
+	private String geraHtml(String mensagem, String cor, String titulo, String listar, String cadastrar) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<HTML> ");
 		sb.append("<HEAD><TITLE>" + titulo + "</TITLE>");
@@ -74,7 +73,11 @@ public class AvisoServlet extends HttpServlet {
 		sb.append("<div class='col-sm-4'></div>");
 		sb.append("<div class='col-sm-4'>");
 		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-		sb.append("<div class='panel-heading'><h1 class='text-center'>" + titulo + "</h1>");
+		sb.append("<div class='panel-heading'>");
+		sb.append(
+				"<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+		sb.append("</form></div>");
+		sb.append("<h1 class='text-center'>" + titulo + "</h1>");
 		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 		sb.append("<div class='panel-body'>");
 

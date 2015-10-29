@@ -129,7 +129,7 @@ public class UsuarioDao {
 		String senhacript = null;
 		try {
 			// Create MessageDigest instance for MD5
-			MessageDigest md = MessageDigest.getInstance("MD5");
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
 			// Add password bytes to digest
 			md.update(senha.getBytes());
 			// Get the hash's bytes

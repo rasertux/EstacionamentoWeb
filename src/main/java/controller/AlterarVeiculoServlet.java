@@ -96,7 +96,10 @@ public class AlterarVeiculoServlet extends HttpServlet {
 			sb.append("<div class='col-sm-4'></div>");
 			sb.append("<div class='col-sm-4'>");
 			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-			sb.append("<div class='panel-heading'><h1 class='text-center'>Alteração de Veículo</h1>");
+			sb.append("<div class='panel-heading'>");
+			sb.append("<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+			sb.append("</form></div>");
+			sb.append("<h1 class='text-center'>Alteração de Veículo</h1>");
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 			sb.append("<div class='panel-body'>");
 			sb.append("<form method='post' class='form-group' role='form' action='/EstacionamentoWeb/alterarveiculo'>");

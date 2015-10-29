@@ -27,7 +27,11 @@ public class FiltroSeguranca implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
+		HttpServletResponse res = (HttpServletResponse) response;
+		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+	    res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+	    res.setDateHeader("Expires", 0); // Proxies.
+		
 		String path = ((HttpServletRequest) request).getRequestURI();
 		if (path.contains("/login.jsp")) {
 			chain.doFilter(request, response);

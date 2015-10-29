@@ -111,8 +111,7 @@ public class ListaVeiculoServlet extends HttpServlet {
 			sb.append("<title>LISTA DE VEICULOS</title>");
 			sb.append("<meta name='viewport' content='width=device-width, initial-scale=1'>");
 			sb.append("<meta name='author' content='David Martins, Rafael Sérgio' />");
-			sb.append(
-					"<link rel='stylesheet' href='css/bootstrap.min.css'>");
+			sb.append("<link rel='stylesheet' href='css/bootstrap.min.css'>");
 			sb.append("<script src='js/jquery-1.11.3.min.js'></script>");
 			sb.append("<script src='js/bootstrap.min.js'></script>");
 			// javascript básico
@@ -135,7 +134,11 @@ public class ListaVeiculoServlet extends HttpServlet {
 			sb.append("<div class='col-sm-2'></div>");
 			sb.append("<div class='col-sm-8'>");
 			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-			sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Veículos</h1>");
+			sb.append("<div class='panel-heading'>");
+			sb.append(
+					"<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+			sb.append("</form></div>");
+			sb.append("<h1 class='text-center'>Listagem de Veículos</h1>");
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 			sb.append("<div class='panel-body'>");
 			sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listarveiculo'>");
@@ -229,7 +232,11 @@ public class ListaVeiculoServlet extends HttpServlet {
 		sb.append("<div class='col-sm-2'></div>");
 		sb.append("<div class='col-sm-8'>");
 		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-		sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Veículos</h1>");
+		sb.append("<div class='panel-heading'>");
+		sb.append(
+				"<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+		sb.append("</form></div>");
+		sb.append("<h1 class='text-center'>Listagem de Veículos</h1>");
 		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 		sb.append("<div class='panel-body'>");
 		sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listarveiculo'>");

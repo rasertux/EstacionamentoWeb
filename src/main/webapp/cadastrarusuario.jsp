@@ -19,6 +19,11 @@
 		<div class='col-sm-4'>
 			<div class='panel panel-default' style='margin-top: 50px;'>
 				<div class='panel-heading'>
+					<div align="right">
+						<form action="/EstacionamentoWeb/logout" method="post">
+							<input type="submit" value="Logout" />
+						</form>
+					</div>
 					<h1 class='text-center'>Cadastro de Usuários</h1>
 					<a href='/EstacionamentoWeb/index.html'> Menu</a>
 				</div>

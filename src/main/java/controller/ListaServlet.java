@@ -100,7 +100,11 @@ public class ListaServlet extends HttpServlet {
 			sb.append("<div class='col-sm-2'></div>");
 			sb.append("<div class='col-sm-8'>");
 			sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-			sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Tarifas</h1>");
+			sb.append("<div class='panel-heading'>");
+			sb.append(
+					"<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+			sb.append("</form></div>");
+			sb.append("<h1 class='text-center'>Listagem de Tarifas</h1>");
 			sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 			sb.append("<div class='panel-body'>");
 			sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listar'>");
@@ -165,7 +169,11 @@ public class ListaServlet extends HttpServlet {
 		sb.append("<div class='col-sm-2'></div>");
 		sb.append("<div class='col-sm-8'>");
 		sb.append("<div class='panel panel-default' style='margin-top:50px;'>");
-		sb.append("<div class='panel-heading'><h1 class='text-center'>Listagem de Tarifas</h1>");
+		sb.append("<div class='panel-heading'>");
+		sb.append(
+				"<div align='right'><form action='/EstacionamentoWeb/logout' method='post'><input type='submit' value='Logout' />");
+		sb.append("</form></div>");
+		sb.append("<h1 class='text-center'>Listagem de Tarifas</h1>");
 		sb.append("<a href='/EstacionamentoWeb/index.html'> Menu</a></div>");
 		sb.append("<div class='panel-body'>");
 		sb.append("<form role='form' class='form-inline' method='post' action='/EstacionamentoWeb/listar'>");
