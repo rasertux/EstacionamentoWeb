@@ -17,6 +17,7 @@ public class UsuarioDao {
 	private static final String SQL_SELECT_ALL = "select * from usuario";
 	private static final String SQL_UPDATE = "update usuario set nome=?, senha=?, email=? where login=?";
 	private static final String SQL_USER = "select * from usuario where login=? and senha=?";
+	private static final String SQL_SELECT_BY_LOGIN = "select * from usuario where login=?";
 
 	public static boolean inserirUsuario(UsuarioBean usuario) {
 		conexao = Conexao.conectar();
@@ -128,25 +129,41 @@ public class UsuarioDao {
 	public static String criptografaSenha(String senha) {
 		String senhacript = null;
 		try {
-			// Create MessageDigest instance for MD5
 			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			// Add password bytes to digest
 			md.update(senha.getBytes());
-			// Get the hash's bytes
 			byte[] bytes = md.digest();
-			// This bytes[] has bytes in decimal format;
-			// Convert it to hexadecimal format
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < bytes.length; i++) {
 				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 			}
-			// Get complete hashed password in hex format
 			senhacript = sb.toString();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return senhacript;
+	}
+
+	public static UsuarioBean getUsuario(String login) {
+		conexao = Conexao.conectar();
+		try {
+			PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_BY_LOGIN);
+			stmt.setString(1, login);
+			ResultSet rs = stmt.executeQuery();
+			UsuarioBean usuario = new UsuarioBean();
+			while (rs.next()) {
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setEmail(rs.getString("email"));
+			}
+			return usuario;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return null;
+		} finally {
+			Conexao.fecharConexao(conexao);
+		}
 	}
 
 }

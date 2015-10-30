@@ -30,15 +30,13 @@
 				</div>
 				<div class='panel-body'>
 					<%
-						UsuarioBean usuario = null;
-						String login = request.getParameter("login");
-						if (login != null && !login.isEmpty()) {
-							ArrayList<UsuarioBean> todos = UsuarioDao.getItens();
-							for (int i = 0; i < todos.size(); i++) {
-								if (todos.get(i).getLogin().equalsIgnoreCase(login)) {
-									usuario = todos.get(i);
-									break;
-								}
+						UsuarioBean usuariobanco = new UsuarioBean();
+						if (request.getMethod().equalsIgnoreCase("GET")) {
+							String login = request.getParameter("login");
+							if (login != null && !login.isEmpty()) {
+								usuariobanco = UsuarioDao.getUsuario(login);
+							} else {
+								response.sendRedirect(request.getContextPath() + "/listarusuarios.jsp");
 							}
 						} else {
 							String vnome, vlogin, vsenha, vemail;
@@ -47,13 +45,13 @@
 							vsenha = request.getParameter("edsenha");
 							vemail = request.getParameter("edemail");
 
-							usuario = new UsuarioBean();
+							UsuarioBean usuario = new UsuarioBean();
 							usuario.setNome(vnome);
 							usuario.setLogin(vlogin);
 							usuario.setSenha(vsenha);
 							usuario.setEmail(vemail);
 							if (UsuarioDao.alterarUsuario(usuario)) {
-								response.sendRedirect("/EstacionamentoWeb/listarusuarios.jsp");
+								response.sendRedirect(request.getContextPath() + "/listarusuarios.jsp");
 							} else {
 								out.println("Erro na alteração!");
 								out.println("<a href='/EstacionamentoWeb/listarusuarios.jsp'>Listar</a>");
@@ -64,16 +62,17 @@
 
 					<form class='form-group' action="alterarusuario.jsp" method="post">
 						<label>Nome: </label> <input class='form-control' type="text"
-							size="30" name="ednome" value=<%out.println(usuario.getNome());%>><br>
+							size="30" name="ednome" required='required'
+							value=<%out.println(usuariobanco.getNome());%>><br>
 						<label>Login: </label> <input class='form-control' type="text"
 							size="20" name="edlogin" readonly
-							value=<%out.println(usuario.getLogin());%>><br> <label>Senha:
-						</label> <input class='form-control' type="password" size="20"
-							name="edsenha" value=<%out.println(usuario.getSenha());%>><br>
-						<label>Email: </label> <input class='form-control' type="email"
-							size="30" name="edemail"
-							value=<%out.println(usuario.getEmail());%>><br> <input
-							class='btn btn-default' type="submit" value="Alterar">
+							value=<%out.println(usuariobanco.getLogin());%>><br>
+						<label>Senha: </label> <input class='form-control' type="password"
+							size="20" name="edsenha" required='required'><br> <label>Email:
+						</label> <input class='form-control' type="email" size="30" name="edemail"
+							required='required'
+							value=<%out.println(usuariobanco.getEmail());%>><br>
+						<input class='btn btn-default' type="submit" value="Alterar">
 						<hr>
 					</form>
 				</div>

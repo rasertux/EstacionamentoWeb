@@ -46,12 +46,14 @@
 					<form role='form' class='form-group' action="cadastrarusuario.jsp"
 						method="post">
 						<label>Nome: </label> <input class='form-control' type="text"
-							size="30" name="ednome"><br> <label>Login: </label>
-						<input class='form-control' type="text" size="20" name="edlogin"><br>
-						<label>Senha: </label> <input class='form-control' type="password"
-							size="20" name="edsenha"><br> <label>Email:
-						</label> <input class='form-control' type="email" size="30" name="edemail"><br>
-						<input class='btn btn-default' type="submit" value="Cadastrar">
+							size="30" name="ednome" required="required"><br> <label>Login:
+						</label> <input class='form-control' type="text" size="20" name="edlogin"
+							required="required"><br> <label>Senha: </label> <input
+							class='form-control' type="password" size="20" name="edsenha"
+							required="required"><br> <label>Email: </label> <input
+							class='form-control' type="email" size="30" name="edemail"
+							required="required"><br> <input
+							class='btn btn-default' type="submit" value="Cadastrar">
 						<input class='btn btn-default' type="reset" value="Limpar">
 						<hr>
 					</form>
