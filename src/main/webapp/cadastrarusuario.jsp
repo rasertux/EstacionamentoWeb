@@ -56,6 +56,8 @@
 							class='btn btn-default' type="submit" value="Cadastrar">
 						<input class='btn btn-default' type="reset" value="Limpar">
 						<hr>
+						<a href='/EstacionamentoWeb/listarusuarios.jsp'>Listar
+							Usuários</a>
 					</form>
 				</div>
 				<div class='panel-footer'>

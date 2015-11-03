@@ -62,8 +62,8 @@ public class CadastroVeiculoServlet extends HttpServlet {
 		TarifaBean tarifa = new TarifaBean();
 		VeiculoDao dao = new VeiculoDao();
 
-		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Cadastrado Com Sucesso&cor=green";
-		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro No Cadastro&cor=red";
+		String SUCESSO = "/EstacionamentoWeb/aviso?msg=Cadastro realizado com sucesso!&cor=green";
+		String ERRO = "/EstacionamentoWeb/aviso?msg=Erro ao cadastrar!&cor=red";
 
 		veiculo.setPlaca(request.getParameter("edplaca"));
 		veiculo.setMarca(request.getParameter("edmarca"));

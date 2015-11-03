@@ -78,8 +78,8 @@ public class ListaServlet extends HttpServlet {
 		String urlremover = "/EstacionamentoWeb/remover?id=" + tarifa.getIdtarifa();
 		String urlalterar = "/EstacionamentoWeb/alterar?id=" + tarifa.getIdtarifa();
 
-		String imgremover = "<img src='remover.png' width='8%'>";
-		String imgalterar = "<img src='alterar.png' width='8%'>";
+		String imgremover = "<img src='/EstacionamentoWeb/img/remover.png' width='8%'>";
+		String imgalterar = "<img src='/EstacionamentoWeb/img/alterar.png' width='8%'>";
 
 		String remover = "<a href='" + urlremover + "'>" + imgremover + "</a>";
 		String alterar = "<a href='" + urlalterar + "'>" + imgalterar + "</a>";

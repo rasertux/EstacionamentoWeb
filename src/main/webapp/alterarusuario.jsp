@@ -74,6 +74,8 @@
 							value=<%out.println(usuariobanco.getEmail());%>><br>
 						<input class='btn btn-default' type="submit" value="Alterar">
 						<hr>
+						<a href='/EstacionamentoWeb/listarusuarios.jsp'>Listar
+							Usuários</a>
 					</form>
 				</div>
 				<div class='panel-footer'>

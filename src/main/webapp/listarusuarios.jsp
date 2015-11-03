@@ -39,8 +39,8 @@
 						<%
 							String urlremover = "/EstacionamentoWeb/removerusuario.jsp?login=";
 							String urlalterar = "/EstacionamentoWeb/alterarusuario.jsp?login=";
-							String imgremover = "<img src='remover.png' width='8%'>";
-							String imgalterar = "<img src='alterar.png' width='8%'>";
+							String imgremover = "<img src='" + request.getContextPath() + "/img/remover.png' width='8%'>";
+							String imgalterar = "<img src='" + request.getContextPath() + "/img/alterar.png' width='8%'>";
 							ArrayList<UsuarioBean> usuarios = new ArrayList<UsuarioBean>();
 							usuarios = UsuarioDao.getItens();
 							if (!usuarios.isEmpty()) {
