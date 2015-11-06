@@ -72,14 +72,18 @@
 												pattern="dd/MM/yyyy HH:mm:ss" />
 										</c:when>
 										<c:otherwise>
-											<customtag:campoData id="saida" />
+											<form action="/EstacionamentoWeb/movimentacao" method="post">
+												<input type="hidden" name="idmov" value="${mov.getIdmov()}" />
+												<customtag:campoData id="saida" />
+												<input type="submit" value="Gravar" />
+											</form>
 										</c:otherwise>
 									</c:choose></td>
 								<td>R$ ${mov.getFatura()}</td>
 								<td><a
-									href="/EstacionamentoWeb/movimentacao?remover=true&idmov="><img
+									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
 										src="img/remover.png" width='8%'></a> | <a
-									href="/EstacionamentoWeb/movimentacao?alterar=true&idmov="><img
+									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
 										src="img/alterar.png" width='8%'></a></td>
 							</tr>
 						</c:forEach>

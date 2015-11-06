@@ -34,23 +34,37 @@ public class MovimentacaoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String placa = request.getParameter("placa");
-		String entrada = request.getParameter("entrada");
+		String idmov = request.getParameter("idmov");
+		String saida = request.getParameter("saida");
+		if (idmov != null && saida != null) {
+			MovimentacaoBean mov = new MovimentacaoBean();
+			MovimentacaoDao movdao = new MovimentacaoDao();
 
-		MovimentacaoBean mov = new MovimentacaoBean();
-		VeiculoBean veiculo = new VeiculoBean();
+			mov = (MovimentacaoBean) movdao.consultar(idmov);
+			mov.setSaida(DataHelper.StringToCalendar("dd/MM/yyyy HH:mm", saida));
 
-		MovimentacaoDao movdao = new MovimentacaoDao();
-		VeiculoDao vdao = new VeiculoDao();
+			movdao.insereSaida(mov);
 
-		veiculo = (VeiculoBean) vdao.consultar(placa);
-		mov.setPlaca(veiculo);
-		mov.setEntrada(DataHelper.StringToCalendar("dd/MM/yyyy HH:mm", entrada));
-		mov.setFatura(veiculo.getIdtarifa().getValor());
+			response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
+		} else {
+			String placa = request.getParameter("placa");
+			String entrada = request.getParameter("entrada");
 
-		movdao.inserir(mov);
+			MovimentacaoBean mov = new MovimentacaoBean();
+			VeiculoBean veiculo = new VeiculoBean();
 
-		response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
+			MovimentacaoDao movdao = new MovimentacaoDao();
+			VeiculoDao vdao = new VeiculoDao();
+
+			veiculo = (VeiculoBean) vdao.consultar(placa);
+			mov.setPlaca(veiculo);
+			mov.setEntrada(DataHelper.StringToCalendar("dd/MM/yyyy HH:mm", entrada));
+			mov.setFatura(veiculo.getIdtarifa().getValor());
+
+			movdao.inserir(mov);
+
+			response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
+		}
 	}
 
 	/**
@@ -59,7 +73,6 @@ public class MovimentacaoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
