@@ -29,6 +29,16 @@ create table usuario(
 	primary key(login)
 );
 
+create table movimentacao(
+	idmov int not null auto_increment,
+    placa char(7) not null,
+    entrada timestamp not null,
+    saida timestamp null,
+    fatura decimal(15,2) default 0,
+    primary key(idmov),
+    foreign key(placa) references veiculo(placa)
+);
+
 /* Inserir usuário admin para administrar a aplicação - DML */
 
 insert into usuario(nome, login, senha, email)
