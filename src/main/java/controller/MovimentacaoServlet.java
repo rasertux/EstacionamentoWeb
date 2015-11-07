@@ -35,7 +35,7 @@ public class MovimentacaoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String idmov = request.getParameter("idmov");
-		String saida = request.getParameter("saida");
+		String saida = request.getParameter("saida" + idmov);
 		if (idmov != null && saida != null) {
 			MovimentacaoBean mov = new MovimentacaoBean();
 			MovimentacaoDao movdao = new MovimentacaoDao();
@@ -43,9 +43,11 @@ public class MovimentacaoServlet extends HttpServlet {
 			mov = (MovimentacaoBean) movdao.consultar(idmov);
 			mov.setSaida(DataHelper.StringToCalendar("dd/MM/yyyy HH:mm", saida));
 
-			movdao.insereSaida(mov);
+			long diferenca = mov.getSaida().getTimeInMillis() - mov.getEntrada().getTimeInMillis();
+			long diferencaHoras = diferenca / (60 * 60 * 1000);
+			mov.setFatura(mov.getFatura() * diferencaHoras);
 
-			response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
+			movdao.insereSaida(mov);
 		} else {
 			String placa = request.getParameter("placa");
 			String entrada = request.getParameter("entrada");
@@ -62,9 +64,8 @@ public class MovimentacaoServlet extends HttpServlet {
 			mov.setFatura(veiculo.getIdtarifa().getValor());
 
 			movdao.inserir(mov);
-
-			response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
 		}
+		response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
 	}
 
 	/**

@@ -90,7 +90,7 @@ public class ListaVeiculoServlet extends HttpServlet {
 	}
 
 	private String gerarLinha(VeiculoBean veiculo, boolean cabecalho, boolean rodape) {
-		String urlremover = "/EstacionamentoWeb/remover?placa=" + veiculo.getPlaca();
+		String urlremover = "/EstacionamentoWeb/remover?remover=veiculo&placa=" + veiculo.getPlaca();
 		String urlalterar = "/EstacionamentoWeb/alterarveiculo?placa=" + veiculo.getPlaca();
 
 		String imgremover = "<img src='/EstacionamentoWeb/img/remover.png' width='8%'>";

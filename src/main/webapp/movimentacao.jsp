@@ -74,17 +74,17 @@
 										<c:otherwise>
 											<form action="/EstacionamentoWeb/movimentacao" method="post">
 												<input type="hidden" name="idmov" value="${mov.getIdmov()}" />
-												<customtag:campoData id="saida" />
+												<customtag:campoData id="saida${mov.getIdmov()}" />
 												<input type="submit" value="Gravar" />
 											</form>
 										</c:otherwise>
 									</c:choose></td>
 								<td>R$ ${mov.getFatura()}</td>
 								<td><a
+									href="/EstacionamentoWeb/remover?remover=mov&idmov=${mov.getIdmov()}"><img
+										src="img/remover.png" width='20%'></a> | <a
 									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
-										src="img/remover.png" width='8%'></a> | <a
-									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
-										src="img/alterar.png" width='8%'></a></td>
+										src="img/alterar.png" width='20%'></a></td>
 							</tr>
 						</c:forEach>
 					</table>

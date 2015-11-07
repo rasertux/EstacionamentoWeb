@@ -75,7 +75,7 @@ public class ListaServlet extends HttpServlet {
 	}
 
 	private String gerarLinha(TarifaBean tarifa, boolean cabecalho, boolean rodape) {
-		String urlremover = "/EstacionamentoWeb/remover?id=" + tarifa.getIdtarifa();
+		String urlremover = "/EstacionamentoWeb/remover?remover=tarifa&id=" + tarifa.getIdtarifa();
 		String urlalterar = "/EstacionamentoWeb/alterar?id=" + tarifa.getIdtarifa();
 
 		String imgremover = "<img src='/EstacionamentoWeb/img/remover.png' width='8%'>";
