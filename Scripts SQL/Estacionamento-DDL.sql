@@ -32,7 +32,7 @@ create table usuario(
 create table movimentacao(
 	idmov int not null auto_increment,
     placa char(7) not null,
-    entrada timestamp not null,
+    entrada timestamp not null default 0,
     saida timestamp null,
     fatura decimal(15,2) default 0,
     primary key(idmov),

@@ -37,7 +37,7 @@
 					<table class='table table-striped'>
 						<tr>
 							<th>IdMov</th>
-							<th>Placa</th>
+							<th>Veículo</th>
 							<th>Entrada</th>
 							<th>Saída</th>
 							<th>Fatura</th>
@@ -49,7 +49,8 @@
 								<td><jsp:useBean id="dao" class="model.VeiculoDao" /> <select
 									class='form-control' name='placa'>
 										<c:forEach var="veiculo" items="${dao.getItens()}">
-											<option value="${veiculo.getPlaca()}">${veiculo.getPlaca()}</option>
+											<option value="${veiculo.getPlaca()}">${veiculo.getPlaca()}
+												${veiculo.getMarca()} ${veiculo.getModelo()}</option>
 										</c:forEach>
 								</select></td>
 								<td><customtag:campoData id="entrada" /><input
@@ -63,28 +64,29 @@
 						<c:forEach var="mov" items="${movdao.getItens()}">
 							<tr>
 								<td>${mov.getIdmov()}</td>
-								<td>${mov.getPlaca().getPlaca()}</td>
+								<td>${mov.getPlaca().getPlaca()}
+									${mov.getPlaca().getMarca()} ${mov.getPlaca().getModelo()}</td>
 								<td><fmt:formatDate value="${mov.getEntrada().time}"
 										pattern="dd/MM/yyyy HH:mm:ss" /></td>
-								<td><c:choose>
-										<c:when test="${not empty mov.getSaida()}">
-											<fmt:formatDate value="${mov.getSaida().time}"
-												pattern="dd/MM/yyyy HH:mm:ss" />
-										</c:when>
-										<c:otherwise>
-											<form action="/EstacionamentoWeb/movimentacao" method="post">
-												<input type="hidden" name="idmov" value="${mov.getIdmov()}" />
-												<customtag:campoData id="saida${mov.getIdmov()}" />
-												<input type="submit" value="Gravar" />
-											</form>
-										</c:otherwise>
-									</c:choose></td>
+								<c:choose>
+									<c:when test="${not empty mov.getSaida()}">
+										<td><fmt:formatDate value="${mov.getSaida().time}"
+												pattern="dd/MM/yyyy HH:mm:ss" /></td>
+									</c:when>
+									<c:otherwise>
+										<form action="/EstacionamentoWeb/movimentacao" method="post">
+											<input type="hidden" name="idmov" value="${mov.getIdmov()}" />
+											<td><customtag:campoData id="saida${mov.getIdmov()}" />
+												<input type="submit" value="Gravar" /></td>
+										</form>
+									</c:otherwise>
+								</c:choose>
 								<td>R$ ${mov.getFatura()}</td>
 								<td><a
 									href="/EstacionamentoWeb/remover?remover=mov&idmov=${mov.getIdmov()}"><img
-										src="img/remover.png" width='20%'></a> | <a
+										src="img/remover.png" width='15%'></a> | <a
 									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
-										src="img/alterar.png" width='20%'></a></td>
+										src="img/alterar.png" width='15%'></a></td>
 							</tr>
 						</c:forEach>
 					</table>

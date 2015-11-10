@@ -19,7 +19,7 @@ public class MovimentacaoDao implements GenericDao {
 	private static final String SQL_UPDATE = "update movimentacao set placa=?, entrada=?, saida=? where idmov=?";
 	private static final String SQL_INSERT_SAIDA = "update movimentacao set saida=?, fatura=? where idmov=?";
 	private static final String SQL_SELECT_BY_ID = "select * from movimentacao where idmov=?";
-	private static final String SQL_SELECT_ALL = "select * from movimentacao";
+	private static final String SQL_SELECT_ALL = "select * from movimentacao order by idmov desc";
 
 	@Override
 	public boolean inserir(Object objeto) {

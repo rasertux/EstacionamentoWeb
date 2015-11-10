@@ -44,8 +44,11 @@ public class MovimentacaoServlet extends HttpServlet {
 			mov.setSaida(DataHelper.StringToCalendar("dd/MM/yyyy HH:mm", saida));
 
 			long diferenca = mov.getSaida().getTimeInMillis() - mov.getEntrada().getTimeInMillis();
-			long diferencaHoras = diferenca / (60 * 60 * 1000);
-			mov.setFatura(mov.getFatura() * diferencaHoras);
+			long diferencahoras = diferenca / (60 * 60 * 1000);
+
+			if (diferencahoras != 0) {
+				mov.setFatura(mov.getFatura() * diferencahoras);
+			}
 
 			movdao.insereSaida(mov);
 		} else {
