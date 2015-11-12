@@ -28,10 +28,11 @@ public class FiltroSeguranca implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletResponse res = (HttpServletResponse) response;
-		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-	    res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-	    res.setDateHeader("Expires", 0); // Proxies.
-		
+		res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP
+																				// 1.1.
+		res.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+		res.setDateHeader("Expires", 0); // Proxies.
+
 		String path = ((HttpServletRequest) request).getRequestURI();
 		if (path.contains("/login.jsp")) {
 			chain.doFilter(request, response);
@@ -42,7 +43,7 @@ public class FiltroSeguranca implements Filter {
 				session.setAttribute("msg", "Você não está logado no sistema!");
 				((HttpServletResponse) response).sendRedirect("/EstacionamentoWeb/login.jsp");
 			} else {
-				session.setMaxInactiveInterval(300);
+				session.setMaxInactiveInterval(900);
 				chain.doFilter(request, response);
 			}
 		}

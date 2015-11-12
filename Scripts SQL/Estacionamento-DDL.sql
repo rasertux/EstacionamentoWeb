@@ -32,8 +32,8 @@ create table usuario(
 create table movimentacao(
 	idmov int not null auto_increment,
     placa char(7) not null,
-    entrada timestamp not null default 0,
-    saida timestamp null,
+    entrada datetime not null,
+    saida datetime,
     fatura decimal(15,2) default 0,
     primary key(idmov),
     foreign key(placa) references veiculo(placa)

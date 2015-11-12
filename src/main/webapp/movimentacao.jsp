@@ -62,7 +62,7 @@
 						</tr>
 						<jsp:useBean id="movdao" class="model.MovimentacaoDao" />
 						<c:forEach var="mov" items="${movdao.getItens()}">
-							<tr>
+							<tr id="mov${mov.getIdmov()}">
 								<td>${mov.getIdmov()}</td>
 								<td>${mov.getPlaca().getPlaca()}
 									${mov.getPlaca().getMarca()} ${mov.getPlaca().getModelo()}</td>
@@ -82,11 +82,17 @@
 									</c:otherwise>
 								</c:choose>
 								<td>R$ ${mov.getFatura()}</td>
-								<td><a
-									href="/EstacionamentoWeb/remover?remover=mov&idmov=${mov.getIdmov()}"><img
-										src="img/remover.png" width='15%'></a> | <a
-									href="/EstacionamentoWeb/movimentacao?idmov=${mov.getIdmov()}"><img
+								<td><a href="#" onclick="remover(${mov.getIdmov()})"><img
+										src="img/remover.png" width='15%'></a> | <a href="#"
+									onclick="alterar(${mov.getIdmov()})"><img
 										src="img/alterar.png" width='15%'></a></td>
+								<script type="text/javascript">
+									function remover(idmov) {
+									$.get("/EstacionamentoWeb/remover?remover=mov", {'idmov' : idmov}, function() {
+									$("#mov" + idmov).closest("tr").hide();
+										});
+									}
+								</script>
 							</tr>
 						</c:forEach>
 					</table>
