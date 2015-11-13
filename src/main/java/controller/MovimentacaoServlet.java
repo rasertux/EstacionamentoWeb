@@ -35,7 +35,7 @@ public class MovimentacaoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String idmov = request.getParameter("idmov");
-		String saida = request.getParameter("saida" + idmov);
+		String saida = request.getParameter("saida");
 		if (idmov != null && saida != null) {
 			MovimentacaoBean mov = new MovimentacaoBean();
 			MovimentacaoDao movdao = new MovimentacaoDao();
@@ -51,6 +51,9 @@ public class MovimentacaoServlet extends HttpServlet {
 			}
 
 			movdao.insereSaida(mov);
+
+			response.getWriter().write(Float.toString(mov.getFatura()));
+			response.setStatus(200);
 		} else {
 			String placa = request.getParameter("placa");
 			String entrada = request.getParameter("entrada");
@@ -67,8 +70,9 @@ public class MovimentacaoServlet extends HttpServlet {
 			mov.setFatura(veiculo.getIdtarifa().getValor());
 
 			movdao.inserir(mov);
+
+			response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
 		}
-		response.sendRedirect(request.getContextPath() + "/movimentacao.jsp");
 	}
 
 	/**

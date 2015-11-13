@@ -16,7 +16,7 @@ public class MovimentacaoDao implements GenericDao {
 
 	private static final String SQL_INSERT = "insert into movimentacao(placa, entrada, fatura) values (?,?,?)";
 	private static final String SQL_DELETE = "delete from movimentacao where idmov=?";
-	private static final String SQL_UPDATE = "update movimentacao set placa=?, entrada=?, saida=?, fatura=? where idmov=?";
+	private static final String SQL_UPDATE = "update movimentacao set entrada=?, saida=?, fatura=? where idmov=?";
 	private static final String SQL_INSERT_SAIDA = "update movimentacao set saida=?, fatura=? where idmov=?";
 	private static final String SQL_SELECT_BY_ID = "select * from movimentacao where idmov=?";
 	private static final String SQL_SELECT_ALL = "select * from movimentacao order by idmov desc";
@@ -65,10 +65,9 @@ public class MovimentacaoDao implements GenericDao {
 		try {
 			PreparedStatement stmt = conexao.prepareStatement(SQL_UPDATE);
 			MovimentacaoBean mov = (MovimentacaoBean) objeto;
-			stmt.setString(1, mov.getPlaca().getPlaca());
-			stmt.setTimestamp(2, new Timestamp(mov.getEntrada().getTimeInMillis()));
+			stmt.setTimestamp(1, new Timestamp(mov.getEntrada().getTimeInMillis()));
 			stmt.setTimestamp(2, new Timestamp(mov.getSaida().getTimeInMillis()));
-			stmt.setFloat(4, mov.getFatura());
+			stmt.setFloat(3, mov.getFatura());
 			stmt.setInt(4, mov.getIdmov());
 			stmt.execute();
 			stmt.close();

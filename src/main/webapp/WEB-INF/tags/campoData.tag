@@ -1,6 +1,7 @@
 <%@ attribute name="id" required="true"%>
 
-<input id="${id}" name="${id}" size="16" maxlength="16" readonly />
+<input id="${id}" name="${id}" size="16" maxlength="16"
+	readonly />
 
 <script>
 	$(function() {

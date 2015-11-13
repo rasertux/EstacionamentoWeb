@@ -66,30 +66,37 @@
 								<td>${mov.getIdmov()}</td>
 								<td>${mov.getPlaca().getPlaca()}
 									${mov.getPlaca().getMarca()} ${mov.getPlaca().getModelo()}</td>
-								<td><fmt:formatDate value="${mov.getEntrada().time}"
-										pattern="dd/MM/yyyy HH:mm:ss" /></td>
+								<td id="alterarentrada${mov.getIdmov()}"><fmt:formatDate
+										value="${mov.getEntrada().time}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
 								<c:choose>
 									<c:when test="${not empty mov.getSaida()}">
-										<td><fmt:formatDate value="${mov.getSaida().time}"
-												pattern="dd/MM/yyyy HH:mm:ss" /></td>
+										<td id="alterarsaida${mov.getIdmov()}"><fmt:formatDate
+												value="${mov.getSaida().time}" pattern="dd/MM/yyyy HH:mm:ss" /></td>
 									</c:when>
 									<c:otherwise>
-										<form action="/EstacionamentoWeb/movimentacao" method="post">
-											<input type="hidden" name="idmov" value="${mov.getIdmov()}" />
-											<td><customtag:campoData id="saida${mov.getIdmov()}" />
-												<input type="submit" value="Gravar" /></td>
-										</form>
+										<td id="atualizasaida${mov.getIdmov()}"><customtag:campoData
+												id="saida${mov.getIdmov()}" /> <a href="#"
+											onclick="atualizaSaida(${mov.getIdmov()})">Gravar</a> <script
+												type="text/javascript">
+												function atualizaSaida(idmov) {
+													var saida = $("#saida" + idmov).val();
+													$.post("/EstacionamentoWeb/movimentacao", {'idmov' : idmov, 'saida' : saida}, function(resposta) {
+													$("#atualizasaida" + idmov).html(saida + ":00");
+													$("#fatura"+idmov).html("R$" + resposta);
+													});
+												}
+											</script></td>
 									</c:otherwise>
 								</c:choose>
-								<td>R$ ${mov.getFatura()}</td>
+								<td id="fatura${mov.getIdmov()}">R$ ${mov.getFatura()}</td>
 								<td><a href="#" onclick="remover(${mov.getIdmov()})"><img
-										src="img/remover.png" width='15%'></a> | <a href="#"
-									onclick="alterar(${mov.getIdmov()})"><img
+										src="img/remover.png" width='15%'></a> | <a
+									href="#" onclick="showalterar(${mov.getIdmov()})"><img
 										src="img/alterar.png" width='15%'></a></td>
 								<script type="text/javascript">
 									function remover(idmov) {
 									$.get("/EstacionamentoWeb/remover?remover=mov", {'idmov' : idmov}, function() {
-									$("#mov" + idmov).closest("tr").hide();
+									$("#mov" + idmov).remove();
 										});
 									}
 								</script>
