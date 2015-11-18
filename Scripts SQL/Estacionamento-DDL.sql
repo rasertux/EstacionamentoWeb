@@ -26,6 +26,7 @@ create table usuario(
 	login varchar(20) not null unique,
 	senha varchar(65) not null,
 	email varchar(30) not null,
+    hashrecupera varchar(65),
 	primary key(login)
 );
 

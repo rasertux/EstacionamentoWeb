@@ -18,6 +18,7 @@ public class UsuarioDao {
 	private static final String SQL_UPDATE = "update usuario set nome=?, senha=?, email=? where login=?";
 	private static final String SQL_USER = "select * from usuario where login=? and senha=?";
 	private static final String SQL_SELECT_BY_LOGIN = "select * from usuario where login=?";
+	private static final String SQL_SELECT_BY_HASH = "select * from usuario where senha=?";
 
 	public static boolean inserirUsuario(UsuarioBean usuario) {
 		conexao = Conexao.conectar();
@@ -158,6 +159,29 @@ public class UsuarioDao {
 				usuario.setEmail(rs.getString("email"));
 			}
 			return usuario;
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+			return null;
+		} finally {
+			Conexao.fecharConexao(conexao);
+		}
+	}
+
+	public static UsuarioBean getUsuarioPorHash(String hash) {
+		conexao = Conexao.conectar();
+		try {
+			PreparedStatement stmt = conexao.prepareStatement(SQL_SELECT_BY_HASH);
+			stmt.setString(1, hash);
+			UsuarioBean usuario = new UsuarioBean();
+			ResultSet rs = null;
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				usuario.setNome(rs.getString("nome"));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setEmail(rs.getString("email"));
+			}
+			return rs.wasNull() ? null : usuario;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;

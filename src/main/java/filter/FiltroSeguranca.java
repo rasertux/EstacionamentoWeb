@@ -34,7 +34,7 @@ public class FiltroSeguranca implements Filter {
 		res.setDateHeader("Expires", 0); // Proxies.
 
 		String path = ((HttpServletRequest) request).getRequestURI();
-		if (path.contains("/login.jsp")) {
+		if (path.contains("/login.jsp") || path.contains("/recuperar") || path.contains("/novasenha.jsp")) {
 			chain.doFilter(request, response);
 		} else {
 			HttpSession session = ((HttpServletRequest) request).getSession();
