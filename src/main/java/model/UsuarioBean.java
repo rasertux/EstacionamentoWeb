@@ -2,7 +2,7 @@ package model;
 
 public class UsuarioBean {
 
-	String nome, login, senha, email;
+	String nome, login, senha, hashrecuperasenha, email;
 
 	public String getNome() {
 		return nome;
@@ -26,6 +26,14 @@ public class UsuarioBean {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getHashrecuperasenha() {
+		return hashrecuperasenha;
+	}
+	
+	public void setHashrecuperasenha(String hashrecuperasenha) {
+		this.hashrecuperasenha = hashrecuperasenha;
 	}
 
 	public String getEmail() {

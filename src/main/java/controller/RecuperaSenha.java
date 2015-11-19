@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -52,31 +54,41 @@ public class RecuperaSenha extends HttpServlet {
 			String email = request.getParameter("email");
 
 			UsuarioBean usuario = new UsuarioBean();
-
 			usuario = UsuarioDao.getUsuario(login);
-
-			SimpleEmail enviaemail = new SimpleEmail();
-
-			String status = null;
-
+			
 			String scheme = request.getScheme();
 			String serverName = request.getServerName();
 			int serverPort = request.getServerPort();
 			String contextPath = request.getContextPath();
 			String resultpath = scheme + "://" + serverName + ":" + serverPort + contextPath;
+			
+			Random gerador = new Random();
+			
+			String aleatorio = "";
+			
+			for(int i=1; i<65; i++) {
+				aleatorio += String.valueOf(gerador.nextInt(10));
+			}
+			
+			usuario.setHashrecuperasenha(UsuarioDao.geraHashCriptografada(aleatorio));
+			UsuarioDao.insereHashRecuperaSenha(usuario);
+
+			SimpleEmail enviaemail = new SimpleEmail();
+
+			String status = null;
 
 			if (usuario.getEmail().equalsIgnoreCase(email)) {
 				try {
 					enviaemail.setDebug(true);
 					enviaemail.setHostName("smtp.gmail.com");
 					enviaemail.setSmtpPort(587);
-					enviaemail.setAuthentication("Seu Login Aqui, se for gmail tambem incluir @gmail.com", "Sua Senha Aqui");
+					enviaemail.setAuthentication("Seu Login Aqui", "Sua Senha Aqui");
 					enviaemail.setStartTLSEnabled(true);
 					enviaemail.addTo(usuario.getEmail());
 					enviaemail.setFrom("Seu Email Aqui");
 					enviaemail.setSubject("Recuperação de Senha - EstacionamentoWeb");
 					enviaemail.setMsg("Para recuperar a sua senha clique no link a seguir: " + resultpath
-							+ "/novasenha.jsp?hash=" + usuario.getSenha());
+							+ "/novasenha.jsp?hash=" + usuario.getHashrecuperasenha());
 					enviaemail.send();
 				} catch (Exception e) {
 					System.out.println(e);

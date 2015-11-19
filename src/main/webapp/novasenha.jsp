@@ -29,7 +29,7 @@
 				<div id="formbody" class="panel-body">
 					<%
 						String hash = request.getParameter("hash");
-						if (hash == null || UsuarioDao.getUsuarioPorHash(hash).getSenha() == null) {
+						if (hash == null || UsuarioDao.getUsuarioPorHash(hash).getHashrecuperasenha() == null) {
 							response.sendRedirect("/EstacionamentoWeb/login.jsp");
 						} else {
 							if (request.getMethod().equalsIgnoreCase("POST")) {
@@ -38,8 +38,9 @@
 
 								UsuarioBean usuario = new UsuarioBean();
 								usuario = UsuarioDao.getUsuarioPorHash(hash);
-								if (usuario.getSenha().equalsIgnoreCase(hash) && novasenha.equals(renovasenha)) {
+								if (usuario.getHashrecuperasenha().equalsIgnoreCase(hash) && novasenha.equals(renovasenha)) {
 									usuario.setSenha(novasenha);
+									usuario.setHashrecuperasenha(null);
 									UsuarioDao.alterarUsuario(usuario);
 									response.sendRedirect("/EstacionamentoWeb/login.jsp");
 								}
