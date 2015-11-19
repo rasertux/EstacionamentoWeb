@@ -83,10 +83,10 @@ public class RecuperaSenha extends HttpServlet {
 					enviaemail.setDebug(true);
 					enviaemail.setHostName("smtp.gmail.com");
 					enviaemail.setSmtpPort(587);
-					enviaemail.setAuthentication("rasertux.test@gmail.com", "abc987654321");
+					enviaemail.setAuthentication("Seu Login Aqui", "Sua Senha Aqui");
 					enviaemail.setStartTLSEnabled(true);
 					enviaemail.addTo(usuario.getEmail());
-					enviaemail.setFrom("rasertux.test@gmail.com");
+					enviaemail.setFrom("Seu Email Aqui");
 					enviaemail.setSubject("Recuperação de Senha - EstacionamentoWeb");
 					enviaemail.setMsg("Para recuperar a sua senha clique no link a seguir: " + resultpath
 							+ "/novasenha.jsp?hash=" + usuario.getHashrecuperasenha());
