@@ -160,7 +160,7 @@ public class UsuarioDao {
 				usuario.setSenha(rs.getString("senha"));
 				usuario.setEmail(rs.getString("email"));
 			}
-			return usuario;
+			return rs.wasNull() ? null : usuario;
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			return null;

@@ -46,9 +46,14 @@
 								}
 							}
 						} else {
-							String status = (String) request.getAttribute("status");
+							String status = request.getParameter("status");
+							String alert = request.getParameter("alert");
 							if (status != null) {
-								out.println("<div class='alert alert-danger'><strong>Ops!</strong>" + status + "</div>");
+								if (alert.equals("info")) {
+									out.println("<div class='alert alert-info'><strong>Atenção!</strong>" + status + "</div>");
+								} else {
+									out.println("<div class='alert alert-danger'><strong>Atenção!</strong>" + status + "</div>");
+								}
 							}
 						}
 					%>

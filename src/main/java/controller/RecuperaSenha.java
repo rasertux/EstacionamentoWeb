@@ -55,21 +55,21 @@ public class RecuperaSenha extends HttpServlet {
 
 			UsuarioBean usuario = new UsuarioBean();
 			usuario = UsuarioDao.getUsuario(login);
-			
+
 			String scheme = request.getScheme();
 			String serverName = request.getServerName();
 			int serverPort = request.getServerPort();
 			String contextPath = request.getContextPath();
 			String resultpath = scheme + "://" + serverName + ":" + serverPort + contextPath;
-			
+
 			Random gerador = new Random();
-			
+
 			String aleatorio = "";
-			
-			for(int i=1; i<65; i++) {
+
+			for (int i = 1; i < 65; i++) {
 				aleatorio += String.valueOf(gerador.nextInt(10));
 			}
-			
+
 			usuario.setHashrecuperasenha(UsuarioDao.geraHashCriptografada(aleatorio));
 			UsuarioDao.insereHashRecuperaSenha(usuario);
 
@@ -77,15 +77,16 @@ public class RecuperaSenha extends HttpServlet {
 
 			String status = null;
 
-			if (usuario.getEmail().equalsIgnoreCase(email)) {
+			if ((usuario.getEmail() != null && usuario.getLogin() != null)
+					&& (usuario.getEmail().equals(email) && usuario.getLogin().equals(login))) {
 				try {
 					enviaemail.setDebug(true);
 					enviaemail.setHostName("smtp.gmail.com");
 					enviaemail.setSmtpPort(587);
-					enviaemail.setAuthentication("Seu Login Aqui", "Sua Senha Aqui");
+					enviaemail.setAuthentication("rasertux.test@gmail.com", "abc987654321");
 					enviaemail.setStartTLSEnabled(true);
 					enviaemail.addTo(usuario.getEmail());
-					enviaemail.setFrom("Seu Email Aqui");
+					enviaemail.setFrom("rasertux.test@gmail.com");
 					enviaemail.setSubject("Recuperação de Senha - EstacionamentoWeb");
 					enviaemail.setMsg("Para recuperar a sua senha clique no link a seguir: " + resultpath
 							+ "/novasenha.jsp?hash=" + usuario.getHashrecuperasenha());
@@ -94,12 +95,10 @@ public class RecuperaSenha extends HttpServlet {
 					System.out.println(e);
 				}
 				status = "Siga as orientações enviadas por email.";
-				request.setAttribute("status", status);
-				response.sendRedirect("/EstacionamentoWeb/login.jsp");
+				response.sendRedirect("/EstacionamentoWeb/login.jsp?alert=info&status=" + status);
 			} else {
-				status = "Email invalido!";
-				request.setAttribute("status", status);
-				response.sendRedirect("/EstacionamentoWeb/login.jsp");
+				status = "Login ou Email inválido!";
+				response.sendRedirect("/EstacionamentoWeb/login.jsp?alert=danger&status=" + status);
 			}
 		}
 	}
