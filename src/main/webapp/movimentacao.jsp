@@ -34,6 +34,7 @@
 					<a href='/EstacionamentoWeb/index.html'> Menu</a>
 				</div>
 				<div class='panel-body'>
+					<div id="usermessage"></div>
 					<table class='table table-striped'>
 						<tr>
 							<th>IdMov</th>
@@ -80,18 +81,27 @@
 												type="text/javascript">
 												function atualizaSaida(idmov) {
 													var saida = $("#saida" + idmov).val();
-													$.post("/EstacionamentoWeb/movimentacao", {'idmov' : idmov, 'saida' : saida}, function(resposta) {
-													$("#atualizasaida" + idmov).html(saida + ":00");
-													$("#fatura"+idmov).html("R$" + resposta);
-													});
-												}
+												$.ajax({
+												    type: "post", 
+												    url: "/EstacionamentoWeb/movimentacao",
+												    data: {'idmov' : idmov, 'saida' : saida},
+												    success: function (resposta) {
+												    	$("#usermessage").html("");
+												    	$("#atualizasaida" + idmov).html(saida + ":00");
+														$("#fatura"+idmov).html("R$" + resposta);
+												    },
+												    error: function (error) {
+												    	$("#usermessage").html("<div class='alert alert-danger'><strong>Ops!</strong> Informe uma Data/Hora Saída posterior a Data/Hora Entrada!</div>");
+												    }
+												})
+												};
 											</script></td>
 									</c:otherwise>
 								</c:choose>
 								<td id="fatura${mov.getIdmov()}">R$ ${mov.getFatura()}</td>
 								<td><a href="#" onclick="remover(${mov.getIdmov()})"><img
-										src="img/remover.png" width='15%'></a> | <a
-									href="#" onclick="showalterar(${mov.getIdmov()})"><img
+										src="img/remover.png" width='15%'></a> | <a href="#"
+									onclick="showalterar(${mov.getIdmov()})"><img
 										src="img/alterar.png" width='15%'></a></td>
 								<script type="text/javascript">
 									function remover(idmov) {

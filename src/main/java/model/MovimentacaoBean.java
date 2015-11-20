@@ -39,6 +39,9 @@ public class MovimentacaoBean {
 	}
 
 	public void setSaida(Calendar saida) {
+		if (getEntrada() == null || saida.before(getEntrada())) {
+			throw new IllegalArgumentException();
+		}
 		this.saida = saida;
 	}
 
